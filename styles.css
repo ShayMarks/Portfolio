@@ -328,10 +328,14 @@ body.no-cursor {
 
 
 /* Buttons */
+/* Buttons */
 .btn {
-    display: inline-block;
+    display: flex; /* הפיכת הכפתור למכולת Flex */
+    align-items: center; /* יישור אנכי במרכז */
+    justify-content: center; /* יישור אופקי במרכז */
     padding: 15px 30px;
-    margin: 15px;
+    /* הסרת ה-margin כדי למנוע הרחבת הכפתור */
+    margin: 0; 
     color: var(--text-color);
     text-decoration: none;
     border-radius: 50px;
@@ -340,7 +344,9 @@ body.no-cursor {
     z-index: 1;
     font-size: 1.1rem;
     transition: color 0.3s, transform 0.3s;
+    min-width: 150px; /* הגדרת רוחב מינימלי לכפתורים */
 }
+
 
 .btn::before {
     content: '';
@@ -368,9 +374,6 @@ body.no-cursor {
     background: none;
     border: 2px solid var(--primary-color);
 }
-
-
-
 
 .btn-secondary {
     background: none;
@@ -727,7 +730,15 @@ body.no-cursor {
     object-fit: cover;
     transition: transform 0.5s;
 }
-
+/* קבוצת הכפתורים */
+.button-group {
+    display: flex;
+    gap: 10px; /* רווח בין הכפתורים */
+    margin-bottom: 10px; /* מרווח תחתון אחיד */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
 .portfolio-item:hover .portfolio-image img {
     transform: scale(1.1);
 }
@@ -736,15 +747,16 @@ body.no-cursor {
     position: absolute;
     top: 0;
     right: 0;
-    bottom: -117%;
+    bottom: 0;
     left: 0;
     background: rgba(0, 0, 0, 0.9);
-    transition: bottom 0.5s;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    transition: 0.5s;
+    justify-content: space-between; /* מפזר את האלמנטים באופן שווה */
+    transition: all 0.5s;
+    opacity: 1;
+    padding: 20px; /* הוספת מרווח פנימי */
 }
 
 .portfolio-overlay:hover{
@@ -757,17 +769,53 @@ body.no-cursor {
 
 .portfolio-overlay h3 {
     color: var(--primary-color);
-    margin-bottom: 20px;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
+    margin-top: 10px;
+    transition: font-size 0.3s ease;
 }
-
+.portfolio-item:hover .portfolio-overlay h3 {
+    font-size: 1.5rem; /* גודל טקסט בעת ריחוף */
+}
+/* הכותרת המשנית */
 .portfolio-overlay p {
     color: #cccccc;
-    margin-bottom: 10px;
     text-align: center;
     font-size: 1rem;
-    margin: 15px;
+    margin: 15px 0; /* מרווחים אחידים מעל ומתחת */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
+
+/* הסתרת הכותרת המשנית וקבוצת הכפתורים */
+.portfolio-overlay p,
+.portfolio-overlay .button-group {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+
+/* הצגת הכותרת המשנית וקבוצת הכפתורים בריחוף */
+.portfolio-item:hover .portfolio-overlay p,
+.portfolio-item:hover .portfolio-overlay .button-group {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.2s;
+}
+
+
+/* אפקט הגדלה וצל בריחוף */
+.portfolio-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 50px rgba(188, 19, 254, 0.7);
+}
+
+/* וידוא שהתוכן לא יגלוש */
+.portfolio-item {
+    overflow: hidden;
+}
+
 
 .portfolio-overlay .btn-primary {
     background-color: var(--primary-color);
