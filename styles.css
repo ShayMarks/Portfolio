@@ -730,6 +730,8 @@ body.no-cursor {
     object-fit: cover;
     transition: transform 0.5s;
 }
+
+
 /* קבוצת הכפתורים */
 .button-group {
     display: flex;
@@ -741,6 +743,25 @@ body.no-cursor {
 }
 .portfolio-item:hover .portfolio-image img {
     transform: scale(1.1);
+}
+
+/* הסגנונות המקוריים לכפתורים ב-Home */
+#home .btn {
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 15px;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    font-size: 1.1rem;
+    transition: color 0.3s, transform 0.3s;
+    text-align: center; /* יישור טקסט במרכז */
+    /* הסרת Flexbox */
+    align-items: initial;
+    justify-content: initial;
 }
 
 .portfolio-overlay {
