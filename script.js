@@ -361,7 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // הסרת המצביע המותאם אישית במכשירי מגע
-  if (!isTouchDevice()) {
+  if (false) { // Disabled custom JS cursor logic to remove the purple circle and trail
     document.body.classList.add('no-cursor');
 
     // מימוש מצביע מותאם אישית
@@ -369,12 +369,17 @@ document.addEventListener('DOMContentLoaded', () => {
     cursor.classList.add('cursor');
     document.body.appendChild(cursor);
 
-    const trailLength = 10; // מספר הנקודות בזנב
+    const trailLength = 40; // מספר הנקודות בזנב - הוגדל לקבלת אפקט הילה ארוך
     const cursors = [];
 
     for (let i = 0; i < trailLength; i++) {
       const trailDot = document.createElement('div');
       trailDot.classList.add('cursor-trail');
+      // Adding dynamic scaling so the tail tapers off smoothly
+      const scale = 1 - (i / trailLength);
+      trailDot.style.width = `${15 * scale}px`;
+      trailDot.style.height = `${15 * scale}px`;
+      
       document.body.appendChild(trailDot);
       cursors.push(trailDot);
     }
@@ -503,4 +508,25 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+});
+
+// Magnetic hover glow positioning
+document.addEventListener('DOMContentLoaded', () => {
+  const magneticElements = document.querySelectorAll(
+    '.btn, .portfolio-item > div, .skills-filter, .filter-btn, .timeline-item > div, .social-icon'
+  );
+
+  magneticElements.forEach((el) => {
+    // Add base class dynamically so we don't need 50 HTML edits
+    el.classList.add('magnetic-glow');
+
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      // Pass coordinates to CSS custom properties
+      el.style.setProperty('--x', `${x}px`);
+      el.style.setProperty('--y', `${y}px`);
+    });
+  });
 });
