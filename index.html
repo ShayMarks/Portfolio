@@ -40,7 +40,7 @@
     </script>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css?v=10" />
+    <link rel="stylesheet" href="styles.css?v=13" />
 
     <!-- JavaScript Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
@@ -129,10 +129,12 @@
           <div class="about-content grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             
             <div class="lg:col-span-4 flex flex-col items-center group perspective-1000">
-              <div class="about-image w-64 h-64 md:w-80 md:h-80 relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-glassBorder transform transition-transform duration-700 group-hover:rotate-y-12">
-                <div id="particles-js" class="absolute inset-0 z-10"></div>
-                <img src="Photos/profile.jpg" alt="Shay Marks" class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110" />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-0"></div>
+              <div class="about-image w-64 h-64 md:w-80 md:h-80 relative rounded-3xl overflow-hidden shadow-[0_15px_50px_rgba(0,0,0,0.6)] border border-glassBorder group" style="--wave-x: 50%; --wave-y: 50%;">
+                <!-- Grayscale Base -->
+                <img src="Photos/profile.jpg" alt="Shay Marks" class="w-full h-full object-cover filter grayscale absolute inset-0 z-0 pointer-events-none" />
+                <!-- Color Overlay with Breathing Soft Flashlight/Mask -->
+                <img src="Photos/profile.jpg" alt="Shay Marks Color" class="w-full h-full object-cover absolute inset-0 z-10 pointer-events-none" style="-webkit-mask-image: radial-gradient(circle var(--flashlight-size, 0px) at var(--wave-x) var(--wave-y), black 50%, rgba(0,0,0,0.5) 80%, transparent 100%); mask-image: radial-gradient(circle var(--flashlight-size, 0px) at var(--wave-x) var(--wave-y), black 50%, rgba(0,0,0,0.5) 80%, transparent 100%);" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-[15] pointer-events-none"></div>
               </div>
               
               <button id="openResumeButton" class="btn mt-10 px-8 py-3 rounded-xl bg-glass border border-glassBorder hover:bg-primary/20 hover:border-primary transition-all duration-300 flex items-center gap-3 w-64 justify-center shadow-lg font-bold cursor-pointer">
@@ -290,78 +292,78 @@
           <div class="timeline relative max-w-4xl mx-auto timeline-line">
             
             <!-- Item 1: 2025 (Left Bubble) -->
-            <div class="timeline-item flex justify-end md:justify-start w-full md:w-1/2 md:pr-12 relative fade-in mb-16">
-              <div class="w-full bg-glass backdrop-blur-xl border border-glassBorder p-8 rounded-3xl relative hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(188,19,254,0.3)] transition-all duration-500 group z-10">
+            <div class="timeline-item flex justify-end md:justify-start w-full md:w-1/2 pl-12 md:pl-0 md:pr-12 relative fade-in mb-12 md:mb-16">
+              <div class="w-full bg-glass backdrop-blur-xl border border-glassBorder p-6 md:p-8 rounded-3xl relative hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(188,19,254,0.3)] transition-all duration-500 group z-10">
                 <!-- Desktop Speech Bubble Tail (Right) -->
                 <div class="absolute top-[40px] -right-[12px] w-6 h-6 bg-white/5 border-t border-r border-[#ffffff1a] transform rotate-45 hidden md:block -z-10 group-hover:bg-primary/20 transition-all duration-500"></div>
                 <!-- Mobile Speech Bubble Tail (Left) -->
                 <div class="absolute top-[40px] -left-[12px] w-6 h-6 bg-white/5 border-b border-l border-[#ffffff1a] transform rotate-45 block md:hidden -z-10 group-hover:bg-primary/20 transition-all duration-500"></div>
                 
                 <div class="flex justify-between items-start mb-4">
-                  <h3 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">2025</h3>
-                  <div class="w-12 h-12 rounded-full bg-[#050505] border border-primary/50 flex items-center justify-center shadow-[0_0_15px_rgba(188,19,254,0.3)] group-hover:scale-110 group-hover:border-primary transition-all duration-300">
-                    <i class="fas fa-graduation-cap text-primary text-xl"></i>
+                  <h3 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">2025</h3>
+                  <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#050505] border border-primary/50 flex items-center justify-center shadow-[0_0_15px_rgba(188,19,254,0.3)] group-hover:scale-110 group-hover:border-primary transition-all duration-300">
+                    <i class="fas fa-graduation-cap text-primary text-lg md:text-xl"></i>
                   </div>
                 </div>
-                <p class="text-gray-300 text-lg">I successfully finished my studies for the Practical Software Engineering degree.</p>
+                <p class="text-gray-300 text-base md:text-lg leading-relaxed">I successfully finished my studies for the Practical Software Engineering degree.</p>
               </div>
             </div>
 
             <!-- Item 2: 2024 (Right Bubble) -->
-            <div class="timeline-item flex justify-end w-full md:w-1/2 ml-auto md:pl-12 relative fade-in mb-16">
-              <div class="w-full bg-glass backdrop-blur-xl border border-glassBorder p-8 rounded-3xl relative hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(8,186,141,0.3)] transition-all duration-500 group z-10">
+            <div class="timeline-item flex justify-end w-full md:w-1/2 ml-auto pl-12 relative fade-in mb-12 md:mb-16">
+              <div class="w-full bg-glass backdrop-blur-xl border border-glassBorder p-6 md:p-8 rounded-3xl relative hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(8,186,141,0.3)] transition-all duration-500 group z-10">
                 <!-- Desktop & Mobile Speech Bubble Tail (Left) -->
                 <div class="absolute top-[40px] -left-[12px] w-6 h-6 bg-white/5 border-b border-l border-[#ffffff1a] transform rotate-45 -z-10 group-hover:bg-secondary/20 transition-all duration-500"></div>
                 
                 <div class="flex justify-between items-start mb-4">
-                  <h3 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">2024</h3>
-                  <div class="w-12 h-12 rounded-full bg-[#050505] border border-secondary/50 flex items-center justify-center shadow-[0_0_15px_rgba(8,186,141,0.3)] group-hover:scale-110 group-hover:border-secondary transition-all duration-300">
-                    <i class="fas fa-gamepad text-secondary text-xl"></i>
+                  <h3 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">2024</h3>
+                  <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#050505] border border-secondary/50 flex items-center justify-center shadow-[0_0_15px_rgba(8,186,141,0.3)] group-hover:scale-110 group-hover:border-secondary transition-all duration-300">
+                    <i class="fas fa-gamepad text-secondary text-lg md:text-xl"></i>
                   </div>
                 </div>
-                <p class="text-gray-300 text-lg">I finished a course: Complete C# Unity Game Developer 2D (by gamedev.tv).</p>
+                <p class="text-gray-300 text-base md:text-lg leading-relaxed">I finished a course: Complete C# Unity Game Developer 2D (by gamedev.tv).</p>
               </div>
             </div>
 
             <!-- Item 3: 2023 Merged (Left Bubble) -->
-            <div class="timeline-item flex justify-end md:justify-start w-full md:w-1/2 md:pr-12 relative fade-in mb-16">
-              <div class="w-full bg-glass backdrop-blur-xl border border-glassBorder p-8 rounded-3xl relative hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(188,19,254,0.3)] transition-all duration-500 group z-10">
+            <div class="timeline-item flex justify-end md:justify-start w-full md:w-1/2 pl-12 md:pl-0 md:pr-12 relative fade-in mb-12 md:mb-16">
+              <div class="w-full bg-glass backdrop-blur-xl border border-glassBorder p-6 md:p-8 rounded-3xl relative hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(188,19,254,0.3)] transition-all duration-500 group z-10">
                 <!-- Desktop Speech Bubble Tail (Right) -->
                 <div class="absolute top-[40px] -right-[12px] w-6 h-6 bg-white/5 border-t border-r border-[#ffffff1a] transform rotate-45 hidden md:block -z-10 group-hover:bg-primary/20 transition-all duration-500"></div>
                 <!-- Mobile Speech Bubble Tail (Left) -->
                 <div class="absolute top-[40px] -left-[12px] w-6 h-6 bg-white/5 border-b border-l border-[#ffffff1a] transform rotate-45 block md:hidden -z-10 group-hover:bg-primary/20 transition-all duration-500"></div>
                 
                 <div class="flex justify-between items-start mb-4">
-                  <h3 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">2023</h3>
+                  <h3 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">2023</h3>
                   <div class="flex gap-2">
-                    <div class="w-10 h-10 rounded-full bg-[#050505] border border-primary/50 flex items-center justify-center shadow-[0_0_15px_rgba(188,19,254,0.3)] group-hover:scale-110 group-hover:border-primary transition-all duration-300">
-                      <i class="fas fa-briefcase text-primary text-sm"></i>
+                    <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#050505] border border-primary/50 flex items-center justify-center shadow-[0_0_15px_rgba(188,19,254,0.3)] group-hover:scale-110 group-hover:border-primary transition-all duration-300">
+                      <i class="fas fa-briefcase text-primary text-xs md:text-sm"></i>
                     </div>
-                    <div class="w-10 h-10 rounded-full bg-[#050505] border border-primary/50 flex items-center justify-center shadow-[0_0_15px_rgba(188,19,254,0.3)] group-hover:scale-110 group-hover:border-primary transition-all duration-300">
-                      <i class="fas fa-certificate text-primary text-sm"></i>
+                    <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#050505] border border-primary/50 flex items-center justify-center shadow-[0_0_15px_rgba(188,19,254,0.3)] group-hover:scale-110 group-hover:border-primary transition-all duration-300">
+                      <i class="fas fa-certificate text-primary text-xs md:text-sm"></i>
                     </div>
                   </div>
                 </div>
-                <ul class="text-gray-300 text-lg space-y-4 list-disc pl-5 marker:text-primary">
+                <ul class="text-gray-300 text-base md:text-lg leading-relaxed space-y-4 list-disc pl-5 marker:text-primary">
                   <li>I started working for a large technology company in Israel, <strong>NESS Technologies</strong>.</li>
-                  <li>I finished my first course on Udemy: <em>The Complete JavaScript Course 2023: From Zero to Expert!</em> (by Jonas Schmedtmann).</li>
+                  <li>I finished my first course on Udemy: <em>The Complete JavaScript Course 2023: From Zero to Expert!</em>.</li>
                 </ul>
               </div>
             </div>
 
             <!-- Item 4: 2022 (Right Bubble) -->
-            <div class="timeline-item flex justify-end w-full md:w-1/2 ml-auto md:pl-12 relative fade-in mb-16">
-              <div class="w-full bg-glass backdrop-blur-xl border border-glassBorder p-8 rounded-3xl relative hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(8,186,141,0.3)] transition-all duration-500 group z-10">
+            <div class="timeline-item flex justify-end w-full md:w-1/2 ml-auto pl-12 relative fade-in mb-12 md:mb-16">
+              <div class="w-full bg-glass backdrop-blur-xl border border-glassBorder p-6 md:p-8 rounded-3xl relative hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(8,186,141,0.3)] transition-all duration-500 group z-10">
                 <!-- Desktop & Mobile Speech Bubble Tail (Left) -->
                 <div class="absolute top-[40px] -left-[12px] w-6 h-6 bg-white/5 border-b border-l border-[#ffffff1a] transform rotate-45 -z-10 group-hover:bg-secondary/20 transition-all duration-500"></div>
                 
                 <div class="flex justify-between items-start mb-4">
-                  <h3 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">2022</h3>
-                  <div class="w-12 h-12 rounded-full bg-[#050505] border border-secondary/50 flex items-center justify-center shadow-[0_0_15px_rgba(8,186,141,0.3)] group-hover:scale-110 group-hover:border-secondary transition-all duration-300">
-                    <i class="fas fa-university text-secondary text-xl"></i>
+                  <h3 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">2022</h3>
+                  <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#050505] border border-secondary/50 flex items-center justify-center shadow-[0_0_15px_rgba(8,186,141,0.3)] group-hover:scale-110 group-hover:border-secondary transition-all duration-300">
+                    <i class="fas fa-university text-secondary text-lg md:text-xl"></i>
                   </div>
                 </div>
-                <p class="text-gray-300 text-lg">I started studying at the College of Management, studies for the Practical Software Engineering certificate (3-year program).</p>
+                <p class="text-gray-300 text-base md:text-lg leading-relaxed">I started studying at the College of Management, Practical Software Engineering certificate (3-year program).</p>
               </div>
             </div>
 
@@ -580,6 +582,6 @@
     </div>
 
     <!-- Custom JS -->
-    <script src="script.js?v=6"></script>
+    <script src="script.js?v=9"></script>
   </body>
 </html>

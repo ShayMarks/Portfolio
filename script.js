@@ -530,3 +530,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// About Me Profile Image Color Wave Tracker
+document.addEventListener('DOMContentLoaded', () => {
+  const aboutImage = document.querySelector('.about-image');
+  if (aboutImage) {
+    let maskRadius = 0;
+    let maskTargetRadius = 0;
+    let maskBreathing = false;
+    let maskTime = 0;
+
+    function updateMask() {
+      // Smooth growth transition (lerp)
+      maskRadius += (maskTargetRadius - maskRadius) * 0.1;
+      
+      let currentDisplayRadius = maskRadius;
+      
+      // If fully grown, start breathing loop visually
+      if (maskBreathing && maskRadius > 118) {
+        currentDisplayRadius = 120 + Math.sin(maskTime) * 8; // +/- 8px breath
+        maskTime += 0.04;
+      } else {
+        maskTime = 0;
+      }
+      
+      aboutImage.style.setProperty('--flashlight-size', `${currentDisplayRadius}px`);
+      requestAnimationFrame(updateMask);
+    }
+    
+    // Start animation loop
+    requestAnimationFrame(updateMask);
+
+    aboutImage.addEventListener('mousemove', (e) => {
+      const rect = aboutImage.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      
+      aboutImage.style.setProperty('--wave-x', `${x}%`);
+      aboutImage.style.setProperty('--wave-y', `${y}%`);
+      
+      maskTargetRadius = 120;
+      maskBreathing = true;
+    });
+
+    aboutImage.addEventListener('mouseleave', () => {
+      maskTargetRadius = 0;
+      maskBreathing = false;
+    });
+  }
+});
