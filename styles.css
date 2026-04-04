@@ -235,7 +235,7 @@ a *, button *, .skills-filter *, .filter-btn * {
 }
 
 /* Specific stacking context fixes so the glow stays behind the vital text */
-.magnetic-glow > h1, .magnetic-glow > h2, .magnetic-glow > h3, .magnetic-glow > p, .magnetic-glow > a, .magnetic-glow > span, .magnetic-glow > .z-10, .magnetic-glow > .p-8 {
+.magnetic-glow > h1, .magnetic-glow > h2, .magnetic-glow > h3, .magnetic-glow > p, .magnetic-glow > a, .magnetic-glow > span, .magnetic-glow > img, .magnetic-glow > .z-10, .magnetic-glow > .p-8 {
   position: relative;
   z-index: 10;
 }

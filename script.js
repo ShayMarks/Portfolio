@@ -170,16 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           );
         } else {
-          gsap.to(item, {
-            opacity: 0,
-            scale: 0.8,
-            duration: 0.5,
-            ease: 'power2.in',
-            onComplete: () => {
-              item.style.display = 'none';
-              gsap.set(item, { clearProps: 'transform' });
-            },
-          });          
+          item.style.display = 'none';
         }
       });
     });
@@ -217,15 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           );
         } else {
-          gsap.to(item, {
-            opacity: 0,
-            y: 50,
-            duration: 0.5,
-            ease: 'power2.in',
-            onComplete: () => {
-              item.style.display = 'none';
-            },
-          });
+          item.style.display = 'none';
         }
       });
     });
@@ -292,13 +275,57 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // אפקט פרלקס לתוכן ה-Hero לפי תנועת העכבר
+  // אפקט פרלקס לתוכן ה-Hero ולעיגול לפי תנועת העכבר
   const heroContent = document.querySelector('.hero-content');
+  const heroCircleWrapper = document.querySelector('.hero-circle-wrapper');
+  const heroInteractiveCircle = document.querySelector('.hero-interactive-circle');
+  
   document.addEventListener('mousemove', (e) => {
+    // פרלקס לטקסט
     const x = (window.innerWidth / 2 - e.pageX) / 50;
     const y = (window.innerHeight / 2 - e.pageY) / 50;
+    if (heroContent) heroContent.style.transform = `translate(${x}px, ${y}px)`;
 
-    heroContent.style.transform = `translate(${x}px, ${y}px)`;
+    // פרלקס לעיגול - בדיוק כמו בכותרת! אותם כיוונים כדי שזה ישתלב בסינכרון
+    if (heroCircleWrapper) {
+      heroCircleWrapper.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    // מעקב של מיקום העכבר על פני העיגול (תמיד יזהה את מרכז העיגול כנקודת האפס)
+    if (heroInteractiveCircle) {
+      const rect = heroInteractiveCircle.getBoundingClientRect();
+      const circleCenterX = rect.left + rect.width / 2;
+      const circleCenterY = rect.top + rect.height / 2;
+
+      // חישוב המרחק של העכבר ממרכז העיגול (כדי שיעבוד מדויק לפי המיקום הפיזי של העיגול בצד ימין)
+      const deltaX = e.clientX - circleCenterX;
+      const deltaY = e.clientY - circleCenterY;
+
+      // המרת המרחק לאחוזים יחסיים לגודל העיגול (מרכז = 50%, שמאל = 0%, ימין = 100% וכו')
+      const radiusX = rect.width / 2 || 1;
+      const radiusY = rect.height / 2 || 1;
+      
+      const percentX = (deltaX / radiusX) * 50 + 50;
+      const percentY = (deltaY / radiusY) * 50 + 50;
+
+      // Update the radial gradient to follow the mouse dynamically relative to the circle's center
+      heroInteractiveCircle.style.background = `radial-gradient(circle at ${percentX}% ${percentY}%, rgba(188, 19, 254, 0.5) 0%, rgba(8, 186, 141, 0.2) 50%, rgba(5, 5, 5, 0.4) 100%)`;
+      
+      // האייקון שבפנים יטה בעקבות העכבר עם הגבלת זווית חכמה
+      const icon = heroInteractiveCircle.querySelector('i');
+      if (icon) {
+        // חישוב הטייה
+        const rawTiltX = (percentY - 50) * -0.3; 
+        const rawTiltY = (percentX - 50) * 0.3;
+
+        // הגבלת התנועה בין מינוס 15 לפלוס 15 מעלות (כדי שלא יתהפך כשהעכבר רחוק מדי)
+        const maxTilt = 15;
+        const tiltX = Math.max(-maxTilt, Math.min(maxTilt, rawTiltX));
+        const tiltY = Math.max(-maxTilt, Math.min(maxTilt, rawTiltY));
+
+        icon.style.transform = `perspective(500px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(15px)`;
+      }
+    }
   });
 
   // Particles.js לאפקט על תמונת הפרופיל
@@ -513,7 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Magnetic hover glow positioning
 document.addEventListener('DOMContentLoaded', () => {
   const magneticElements = document.querySelectorAll(
-    '.btn, .portfolio-item > div, .skills-filter, .filter-btn, .timeline-item > div, .social-icon'
+    '.btn, .portfolio-item > div, .skills-filter, .filter-btn, .timeline-item > div, .social-icon, .about-text-content, .skill-item'
   );
 
   magneticElements.forEach((el) => {
