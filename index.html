@@ -40,7 +40,7 @@
     </script>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css?v=15" />
+    <link rel="stylesheet" href="styles.css?v=25" />
 
     <!-- JavaScript Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
@@ -63,19 +63,35 @@
         <a href="#home" class="logo text-2xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary transition-all hover:scale-105 inline-block cursor-pointer">
           SHAY.M
         </a>
+        <style>
+          @media (max-width: 768px) {
+            #menu-toggle:checked ~ .hamburger .line-1 { transform: translateY(11px) rotate(45deg); }
+            #menu-toggle:checked ~ .hamburger .line-2 { opacity: 0; }
+            #menu-toggle:checked ~ .hamburger .line-3 { transform: translateY(-11px) rotate(-45deg); }
+            
+            /* Apply background dynamically on mobile only via CSS to bypass Safari/CDN bugs */
+            #menu-toggle:checked ~ .nav-menu {
+              background-color: rgba(0, 0, 0, 0.95) !important;
+            }
+          }
+        </style>
         <input type="checkbox" id="menu-toggle" class="hidden peer" />
-        <label for="menu-toggle" class="hamburger z-50 md:hidden cursor-pointer w-8 h-8 flex flex-col justify-center space-y-2" aria-label="Toggle Menu">
-          <span class="w-8 h-1 bg-white rounded transition-all duration-300 relative"></span>
-        </label>
-        
-        <ul class="nav-menu fixed inset-0 bg-[#050505]/95 backdrop-blur-2xl flex flex-col justify-center items-center space-y-8 text-2xl font-heading transition-all duration-500 opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto md:relative md:bg-transparent md:flex-row md:space-y-0 md:space-x-8 md:text-base md:opacity-100 md:pointer-events-auto md:p-0">
-          <li><a href="#home" class="hover:text-primary transition-colors cursor-pointer">Home</a></li>
-          <li><a href="#about" class="hover:text-primary transition-colors cursor-pointer">About Me</a></li>
-          <li><a href="#skills" class="hover:text-primary transition-colors cursor-pointer">Skills</a></li>
-          <li><a href="#timeline" class="hover:text-primary transition-colors cursor-pointer">Timeline</a></li>
-          <li><a href="#portfolio" class="hover:text-primary transition-colors cursor-pointer">Projects</a></li>
-          <li><a href="#contact" class="hover:text-primary transition-colors cursor-pointer">Contact</a></li>
+
+        <ul class="nav-menu absolute top-0 left-0 w-screen h-screen z-40 flex flex-col justify-start items-center pt-24 space-y-4 text-xl font-heading transition-all duration-500 opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto md:justify-center md:pt-0 md:relative md:w-auto md:h-auto md:bg-transparent md:flex-row md:space-y-0 md:space-x-8 md:text-base md:opacity-100 md:pointer-events-auto md:p-0 md:z-auto">
+          <li><a href="#home" class="btn relative group block w-full text-center py-2 md:w-auto md:px-5 md:py-2 md:rounded-xl text-gray-300 font-bold tracking-wider hover:text-white transition-all duration-300 cursor-pointer border-transparent md:border md:border-white/20 hover:border-primary md:hover:border-white bg-transparent"><span class="relative z-10">Home</span></a></li>
+          <li><a href="#about" class="btn relative group block w-full text-center py-2 md:w-auto md:px-5 md:py-2 md:rounded-xl text-gray-300 font-bold tracking-wider hover:text-white transition-all duration-300 cursor-pointer border-transparent md:border md:border-white/20 hover:border-primary md:hover:border-white bg-transparent"><span class="relative z-10">About Me</span></a></li>
+          <li><a href="#skills" class="btn relative group block w-full text-center py-2 md:w-auto md:px-5 md:py-2 md:rounded-xl text-gray-300 font-bold tracking-wider hover:text-white transition-all duration-300 cursor-pointer border-transparent md:border md:border-white/20 hover:border-primary md:hover:border-white bg-transparent"><span class="relative z-10">Skills</span></a></li>
+          <li><a href="#timeline" class="btn relative group block w-full text-center py-2 md:w-auto md:px-5 md:py-2 md:rounded-xl text-gray-300 font-bold tracking-wider hover:text-white transition-all duration-300 cursor-pointer border-transparent md:border md:border-white/20 hover:border-primary md:hover:border-white bg-transparent"><span class="relative z-10">Timeline</span></a></li>
+          <li><a href="#portfolio" class="btn relative group block w-full text-center py-2 md:w-auto md:px-5 md:py-2 md:rounded-xl text-gray-300 font-bold tracking-wider hover:text-white transition-all duration-300 cursor-pointer border-transparent md:border md:border-white/20 hover:border-primary md:hover:border-white bg-transparent"><span class="relative z-10">Projects</span></a></li>
+          <li><a href="#contact" class="btn relative group block w-full text-center py-2 md:w-auto md:px-5 md:py-2 md:rounded-xl text-gray-300 font-bold tracking-wider hover:text-white transition-all duration-300 cursor-pointer border-transparent md:border md:border-white/20 hover:border-primary md:hover:border-white bg-transparent"><span class="relative z-10">Contact</span></a></li>
         </ul>
+
+        <label for="menu-toggle" class="hamburger relative z-[100] md:hidden cursor-pointer w-8 h-6 flex flex-col justify-between" aria-label="Toggle Menu">
+          <span class="w-full h-0.5 bg-white rounded transition-transform duration-300 origin-center line-1"></span>
+          <span class="w-full h-0.5 bg-white rounded transition-opacity duration-300 line-2"></span>
+          <span class="w-full h-0.5 bg-white rounded transition-transform duration-300 origin-center line-3"></span>
+        </label>
+
       </nav>
     </header>
 
@@ -94,9 +110,8 @@
               <span class="typed-text font-medium text-white"></span>
             </p>
             <div class="flex flex-col sm:flex-row gap-6 justify-center md:justify-start items-center animate-[fadeInUp_1.8s_ease-out]">
-              <a href="#portfolio" class="btn group relative px-8 py-4 rounded-full font-bold uppercase tracking-wider overflow-hidden bg-primary text-white hover:shadow-[0_0_30px_rgba(188,19,254,0.6)] transition-all cursor-pointer">
-                <span class="relative z-10">View Projects</span>
-                <div class="absolute inset-0 h-full w-full bg-gradient-to-r from-secondary to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <a href="#portfolio" class="btn relative px-8 py-4 rounded-full font-bold uppercase tracking-wider overflow-hidden border border-primary/50 text-white bg-primary/10 hover:bg-primary/20 hover:border-primary transition-all backdrop-blur-md shadow-[0_0_15px_rgba(188,19,254,0.2)] cursor-pointer">
+                View Projects
               </a>
               <a href="#contact" class="btn relative px-8 py-4 rounded-full font-bold uppercase tracking-wider overflow-hidden border border-white/20 text-white hover:bg-white/10 hover:border-white/40 transition-all backdrop-blur-md cursor-pointer">
                 Get in Touch
@@ -172,141 +187,213 @@
           
           <div class="fade-in">
             <div class="skills-categories flex flex-wrap justify-center gap-3 mb-16">
-              <button class="skills-filter active px-6 py-2 rounded-full border border-glassBorder bg-glass hover:bg-primary hover:border-primary transition-all duration-300 text-sm font-bold tracking-wider uppercase backdrop-blur shadow-md cursor-pointer" data-category="all">All</button>
-              <button class="skills-filter px-6 py-2 rounded-full border border-glassBorder bg-glass hover:bg-primary hover:border-primary transition-all duration-300 text-sm font-bold tracking-wider uppercase backdrop-blur shadow-md cursor-pointer" data-category="languages">Languages</button>
-              <button class="skills-filter px-6 py-2 rounded-full border border-glassBorder bg-glass hover:bg-primary hover:border-primary transition-all duration-300 text-sm font-bold tracking-wider uppercase backdrop-blur shadow-md cursor-pointer" data-category="frontend">Frontend</button>
-              <button class="skills-filter px-6 py-2 rounded-full border border-glassBorder bg-glass hover:bg-primary hover:border-primary transition-all duration-300 text-sm font-bold tracking-wider uppercase backdrop-blur shadow-md cursor-pointer" data-category="backend">Backend & DB</button>
-              <button class="skills-filter px-6 py-2 rounded-full border border-glassBorder bg-glass hover:bg-primary hover:border-primary transition-all duration-300 text-sm font-bold tracking-wider uppercase backdrop-blur shadow-md cursor-pointer" data-category="tools">Tooling & Extras</button>
-              <button class="skills-filter px-6 py-2 rounded-full border border-glassBorder bg-glass hover:bg-primary hover:border-primary transition-all duration-300 text-sm font-bold tracking-wider uppercase backdrop-blur shadow-md cursor-pointer" data-category="ai">AI Tools</button>
+              <button class="skills-filter active px-8 py-3 rounded-full border-2 border-primary/50 bg-[#050505] hover:bg-primary/20 hover:border-primary text-white font-bold tracking-wider uppercase transition-all shadow-[0_0_15px_rgba(188,19,254,0.1)] cursor-pointer" data-category="all">All</button>
+              <button class="skills-filter px-8 py-3 rounded-full border-2 border-primary/50 bg-[#050505] hover:bg-primary/20 hover:border-primary text-white font-bold tracking-wider uppercase transition-all cursor-pointer" data-category="languages">Languages</button>
+              <button class="skills-filter px-8 py-3 rounded-full border-2 border-primary/50 bg-[#050505] hover:bg-primary/20 hover:border-primary text-white font-bold tracking-wider uppercase transition-all cursor-pointer" data-category="frontend">Frontend</button>
+              <button class="skills-filter px-8 py-3 rounded-full border-2 border-primary/50 bg-[#050505] hover:bg-primary/20 hover:border-primary text-white font-bold tracking-wider uppercase transition-all cursor-pointer" data-category="backend">Backend & DB</button>
+              <button class="skills-filter px-8 py-3 rounded-full border-2 border-primary/50 bg-[#050505] hover:bg-primary/20 hover:border-primary text-white font-bold tracking-wider uppercase transition-all cursor-pointer" data-category="tools">Tooling & Extras</button>
+              <button class="skills-filter px-8 py-3 rounded-full border-2 border-primary/50 bg-[#050505] hover:bg-primary/20 hover:border-primary text-white font-bold tracking-wider uppercase transition-all cursor-pointer" data-category="ai">AI Tools</button>
             </div>
 
-            <div class="skills-icons flex flex-wrap justify-center gap-6 max-w-[1200px] mx-auto">
+            <div class="skills-icons grid grid-cols-4 gap-2 md:flex md:flex-wrap md:justify-center md:gap-6 max-w-[1200px] mx-auto px-2 md:px-0">
               <!-- Rebuilding icons as stunning glass box items -->
               <!-- Language -->
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(188,19,254,0.3)] transition-all duration-500" data-category="languages">
-                <img src="Icons/javascript.png" alt="JavaScript" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">JavaScript</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="languages">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/javascript.png" alt="JavaScript" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">JavaScript</p>
               </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(188,19,254,0.3)] transition-all duration-500" data-category="languages">
-                <img src="Icons/csharp.png" alt="C#" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">C#</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="languages">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/csharp.png" alt="C#" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">C#</p>
               </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(188,19,254,0.3)] transition-all duration-500" data-category="languages">
-                <img src="Icons/python.png" alt="Python" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">Python</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="languages">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/python.png" alt="Python" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Python</p>
               </div>
 
               <!-- Frontend -->
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(8,186,141,0.3)] transition-all duration-500" data-category="frontend">
-                <img src="Icons/html5.png" alt="HTML5" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">HTML5</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="frontend">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/html5.png" alt="HTML5" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">HTML5</p>
               </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(8,186,141,0.3)] transition-all duration-500" data-category="frontend">
-                <img src="Icons/handlebars.png" alt="Handlebars" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">Handlebars</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="frontend">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/handlebars.png" alt="Handlebars" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Handlebars</p>
               </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(8,186,141,0.3)] transition-all duration-500" data-category="frontend">
-                <img src="Icons/css3.png" alt="CSS3" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">CSS3</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="frontend">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/css3.png" alt="CSS3" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">CSS3</p>
               </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(8,186,141,0.3)] transition-all duration-500" data-category="frontend">
-                <img src="Icons/bootstrap.png" alt="Bootstrap" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">Bootstrap</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="frontend">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/bootstrap.png" alt="Bootstrap" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Bootstrap</p>
               </div>
 
               <!-- Backend -->
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(188,19,254,0.3)] transition-all duration-500" data-category="backend">
-                <img src="Icons/nodejs.png" alt="Node.js" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">Node.js</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="backend">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/nodejs.png" alt="Node.js" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Node.js</p>
               </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(188,19,254,0.3)] transition-all duration-500" data-category="backend">
-                <img src="Icons/aspnet.png" alt="ASP.NET" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">ASP.NET</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="backend">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/aspnet.png" alt="ASP.NET" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">ASP.NET</p>
               </div>
 
               <!-- Databases merged into Backend -->
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(8,186,141,0.3)] transition-all duration-500" data-category="backend">
-                <img src="Icons/sqlserver.png" alt="SQL Server" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">SQL Server</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="backend">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/sqlserver.png" alt="SQL Server" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">SQL Server</p>
               </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(8,186,141,0.3)] transition-all duration-500" data-category="backend">
-                <img src="Icons/mysql.png" alt="MySQL" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">MySQL</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="backend">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/mysql.png" alt="MySQL" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">MySQL</p>
               </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(8,186,141,0.3)] transition-all duration-500" data-category="backend">
-                <img src="Icons/mongodb.png" alt="MongoDB" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">MongoDB</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="backend">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/mongodb.png" alt="MongoDB" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">MongoDB</p>
               </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(8,186,141,0.3)] transition-all duration-500" data-category="backend">
-                <img src="Icons/mongosh.png" alt="Mongosh" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">Mongosh</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="backend">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/mongosh.png" alt="Mongosh" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Mongosh</p>
               </div>
 
               <!-- IDEs & Version Control & Tools merged into Tools -->
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
-                <img src="Icons/visualstudio.png" alt="VS" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">Visual Studio</p>
+                            <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/antigravity.png" alt="Antigravity" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Antigravity</p>
               </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
-                <img src="Icons/vscode.png" alt="VSCode" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">VS Code</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/cursor.png" alt="Cursor" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Cursor</p>
               </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
-                <img src="Icons/git.png" alt="Git" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">Git</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/visualstudio.png" alt="VS" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Visual Studio</p>
               </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
-                <img src="Icons/github.png" alt="GitHub" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">GitHub</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/vscode.png" alt="VSCode" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">VS Code</p>
+              </div>
+                            <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/unity.png" alt="Unity" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Unity</p>
+              </div>
+                                          <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/jira.png" alt="Jira" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Jira</p>
+              </div>
+                            <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/github.png" alt="GitHub" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">GitHub</p>
+              </div>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/git.png" alt="Git" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Git</p>
               </div>
 
+
               <!-- Automations and Additional tools -->
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
-                <img src="Icons/selenium.png" alt="Selenium" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">Selenium</p>
+              
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/selenium.png" alt="Selenium" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Selenium</p>
               </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
-                <img src="Icons/postman.png" alt="Postman" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">Postman</p>
-              </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="ai">
-                <img src="Icons/chatgpt.png" alt="ChatGPT" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">ChatGPT</p>
-              </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
-                <img src="Icons/unity.png" alt="Unity" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">Unity</p>
-              </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
-                <img src="Icons/antigravity.png" alt="Antigravity" class="w-12 h-12 object-contain mb-4 drop-shadow-md rounded-xl" />
-                <p class="font-medium text-sm text-gray-300">Antigravity</p>
-              </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
-                <img src="Icons/cursor.png" alt="Cursor" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">Cursor</p>
-              </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
-                <img src="Icons/jira.png" alt="Jira" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">Jira</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="tools">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/postman.png" alt="Postman" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Postman</p>
               </div>
 
               <!-- AI Additional Tools -->
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="ai">
-                <img src="Icons/suno.png" alt="Suno" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">Suno</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="ai">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/gemini.png" alt="Gemini" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Gemini</p>
               </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="ai">
-                <img src="Icons/claude.png" alt="Claude" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-sm text-gray-300">Claude</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="ai">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/googlelabs.png" alt="Google Labs" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Google Labs</p>
               </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="ai">
-                <img src="Icons/gemini.png" alt="Google Gemini" class="w-12 h-12 object-contain mb-4 drop-shadow-md" />
-                <p class="font-medium text-center text-sm text-gray-300">Google Gemini</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="ai">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/claude.png" alt="Claude" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Claude</p>
               </div>
-              <div class="skill-item p-6 rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-32 flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="ai">
-                <img src="Icons/aitools.png" alt="AI Tools" class="w-12 h-12 object-contain mb-4 drop-shadow-md rounded-xl" />
-                <p class="font-medium text-sm text-gray-300">AI Tools</p>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="ai">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/claudecode.png" alt="Claude Code" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Claude Code</p>
               </div>
+                            <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="ai">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/chatgpt.png" alt="ChatGPT" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">ChatGPT</p>
+              </div>
+              
+                            <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="ai">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/suno.png" alt="Suno" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">Suno</p>
+              </div>
+              <div class="skill-item overflow-hidden p-1 md:p-4 rounded-xl md:rounded-2xl bg-glass border border-glassBorder backdrop-blur-sm w-full md:w-32 aspect-square flex flex-col items-center justify-center hover:bg-white/10 hover:-translate-y-2 transition-all duration-500" data-category="ai">
+                <div class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center mb-1 md:mb-3">
+                  <img src="Icons/aitools.png" alt="AI Tools" class="max-w-full max-h-full object-contain drop-shadow-md" />
+                </div>
+                <p class="font-bold text-[8px] md:text-xs text-gray-300 text-center leading-none truncate w-full px-1">AI Tools</p>
+              </div>
+              
             </div>
           </div>
         </div>
@@ -406,15 +493,15 @@
       <section id="portfolio" class="py-32 relative z-10 bg-[#0a0a0a]">
         <div class="container mx-auto px-6 max-w-[1400px]">
           <div class="flex flex-col items-center mb-16 section-title-container">
-            <h2 class="section-title text-4xl md:text-5xl lg:text-6xl font-black font-heading tracking-wide mb-4">Masterpieces</h2>
-            <div class="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full shadow-[0_0_15px_rgba(188,19,254,0.6)]"></div>
+            <h2 class="section-title text-4xl md:text-5xl lg:text-6xl font-black font-heading tracking-wide mb-4 text-white">Projects</h2>
+            <div class="h-1 w-24 bg-gradient-to-r from-white/20 via-white to-white/20 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.4)]"></div>
           </div>
           
           <div class="portfolio-filters flex flex-wrap justify-center gap-4 mb-16 fade-in">
-            <button class="filter-btn active px-8 py-3 rounded-full border-2 border-primary/50 bg-[#050505] hover:bg-primary/20 hover:border-primary text-white font-bold tracking-wider transition-all shadow-[0_0_15px_rgba(188,19,254,0.1)] cursor-pointer" data-filter="all">All</button>
-            <button class="filter-btn px-8 py-3 rounded-full border-2 border-primary/50 bg-[#050505] hover:bg-primary/20 hover:border-primary text-white font-bold tracking-wider transition-all cursor-pointer" data-filter="web">Web Sites</button>
-            <button class="filter-btn px-8 py-3 rounded-full border-2 border-primary/50 bg-[#050505] hover:bg-primary/20 hover:border-primary text-white font-bold tracking-wider transition-all cursor-pointer" data-filter="app">Applications</button>
-            <button class="filter-btn px-8 py-3 rounded-full border-2 border-primary/50 bg-[#050505] hover:bg-primary/20 hover:border-primary text-white font-bold tracking-wider transition-all cursor-pointer" data-filter="ai">AI Projects</button>
+            <button class="filter-btn glass-btn-premium active px-8 py-3 rounded-full text-white font-bold tracking-wider cursor-pointer" data-filter="all">All</button>
+            <button class="filter-btn glass-btn-premium px-8 py-3 rounded-full text-white font-bold tracking-wider cursor-pointer" data-filter="web">Web Sites</button>
+            <button class="filter-btn glass-btn-premium px-8 py-3 rounded-full text-white font-bold tracking-wider cursor-pointer" data-filter="app">Applications</button>
+            <button class="filter-btn glass-btn-premium px-8 py-3 rounded-full text-white font-bold tracking-wider cursor-pointer" data-filter="ai">AI Projects</button>
           </div>
 
           <!-- Glass Grid -->
@@ -423,13 +510,12 @@
             <div class="portfolio-item transform transition-all duration-500 hover:-translate-y-3" data-category="app">
               <div class="h-full bg-glass border border-glassBorder rounded-3xl overflow-hidden shadow-2xl group flex flex-col relative z-20 spotlight-wrapper">
                 <div class="h-56 relative overflow-hidden">
-                  <div class="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-all z-10"></div>
-                  <img src="Photos/Projects/1.jpg" alt="Benefits Club" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                  <img src="Photos/Projects/1.jpg" alt="Benefits Club" class="w-full h-full object-cover transform group-hover:scale-110 transition-all duration-700 grayscale-[60%] group-hover:grayscale-0" />
                 </div>
                 <div class="p-8 flex flex-col flex-grow bg-gradient-to-t from-[#050505] to-transparent">
-                  <h3 class="text-2xl font-bold font-heading mb-3 text-white group-hover:text-primary transition-colors">Benefits Club</h3>
+                  <h3 class="text-2xl font-bold font-heading mb-3 text-gray-300 group-hover:text-white transition-all duration-300">Benefits Club</h3>
                   <p class="text-gray-400 font-light flex-grow mb-6">A platform providing exclusive benefits and discounts to members.</p>
-                  <a href="https://github.com/ShayMarks/Shay-Benefits-Club" target="_blank" class="self-start px-6 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-primary hover:border-primary hover:shadow-[0_0_15px_rgba(188,19,254,0.5)] transition-all font-bold text-sm tracking-widest uppercase cursor-pointer">View Repo</a>
+                  <a href="https://github.com/ShayMarks/Shay-Benefits-Club" target="_blank" class="glass-btn-premium self-start px-6 py-2 rounded-xl text-gray-300 font-bold text-sm tracking-widest uppercase cursor-pointer">View Repo</a>
                 </div>
               </div>
             </div>
@@ -438,13 +524,12 @@
             <div class="portfolio-item transform transition-all duration-500 hover:-translate-y-3" data-category="app">
               <div class="h-full bg-glass border border-glassBorder rounded-3xl overflow-hidden shadow-2xl group flex flex-col relative z-20 spotlight-wrapper">
                 <div class="h-56 relative overflow-hidden">
-                  <div class="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-all z-10"></div>
-                  <img src="Photos/Projects/2.jpg" alt="Hotel System" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                  <img src="Photos/Projects/2.jpg" alt="Hotel System" class="w-full h-full object-cover transform group-hover:scale-110 transition-all duration-700 grayscale-[60%] group-hover:grayscale-0" />
                 </div>
                 <div class="p-8 flex flex-col flex-grow bg-gradient-to-t from-[#050505] to-transparent">
-                  <h3 class="text-2xl font-bold font-heading mb-3 text-white group-hover:text-primary transition-colors">Hotel Management</h3>
+                  <h3 class="text-2xl font-bold font-heading mb-3 text-gray-300 group-hover:text-white transition-all duration-300">Hotel Management</h3>
                   <p class="text-gray-400 font-light flex-grow mb-6">A comprehensive system designed to streamline hotel operations efficiently.</p>
-                  <a href="https://github.com/ShayMarks/hotel_Progect_ASP.NET" target="_blank" class="self-start px-6 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-primary hover:border-primary transition-all font-bold text-sm tracking-widest uppercase cursor-pointer">View Repo</a>
+                  <a href="https://github.com/ShayMarks/hotel_Progect_ASP.NET" target="_blank" class="glass-btn-premium self-start px-6 py-2 rounded-xl text-gray-300 font-bold text-sm tracking-widest uppercase cursor-pointer">View Repo</a>
                 </div>
               </div>
             </div>
@@ -453,15 +538,14 @@
             <div class="portfolio-item transform transition-all duration-500 hover:-translate-y-3" data-category="ai">
               <div class="h-full bg-glass border border-glassBorder rounded-3xl overflow-hidden shadow-2xl group flex flex-col relative z-20 spotlight-wrapper">
                 <div class="h-56 relative overflow-hidden">
-                  <div class="absolute inset-0 bg-secondary/20 group-hover:bg-transparent transition-all z-10"></div>
-                  <img src="Photos/Projects/3.jpg" alt="AI Portfolio" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                  <img src="Photos/Projects/3.jpg" alt="AI Portfolio" class="w-full h-full object-cover transform group-hover:scale-110 transition-all duration-700 grayscale-[60%] group-hover:grayscale-0" />
                 </div>
                 <div class="p-8 flex flex-col flex-grow bg-gradient-to-t from-[#050505] to-transparent">
-                  <h3 class="text-2xl font-bold font-heading mb-3 text-white group-hover:text-secondary transition-colors">AI Portfolio Website</h3>
+                  <h3 class="text-2xl font-bold font-heading mb-3 text-gray-300 group-hover:text-white transition-all duration-300">AI Portfolio Website</h3>
                   <p class="text-gray-400 font-light flex-grow mb-6">Projects and detailed explanations of creations built alongside AI.</p>
                   <div class="flex gap-3">
-                    <a href="https://github.com/ShayMarks/My-AI-Portfolio" target="_blank" class="px-5 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-secondary hover:border-secondary transition-all font-bold text-xs tracking-widest uppercase text-center cursor-pointer">Repo</a>
-                    <a href="https://shaymarks.github.io/My-AI-Portfolio/" target="_blank" class="flex-1 px-5 py-2 rounded-xl bg-secondary/80 text-white hover:bg-secondary hover:shadow-[0_0_15px_rgba(8,186,141,0.6)] transition-all font-bold text-xs tracking-widest uppercase text-center cursor-pointer">Live Demo</a>
+                    <a href="https://github.com/ShayMarks/My-AI-Portfolio" target="_blank" class="glass-btn-premium px-5 py-2 rounded-xl text-gray-300 font-bold text-xs tracking-widest uppercase text-center cursor-pointer">Repo</a>
+                    <a href="https://shaymarks.github.io/My-AI-Portfolio/" target="_blank" class="glass-btn-premium flex-1 px-5 py-2 rounded-xl text-gray-300 font-bold text-sm tracking-widest uppercase cursor-pointer">Live Demo</a>
                   </div>
                 </div>
               </div>
@@ -473,13 +557,12 @@
               <!-- Replicate structure -->
               <div class="h-full bg-glass border border-glassBorder rounded-3xl overflow-hidden shadow-2xl group flex flex-col relative z-20 spotlight-wrapper">
                 <div class="h-56 relative overflow-hidden">
-                  <div class="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-all z-10"></div>
-                  <img src="Photos/Projects/4.jpg" alt="Game Store" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                  <img src="Photos/Projects/4.jpg" alt="Game Store" class="w-full h-full object-cover transform group-hover:scale-110 transition-all duration-700 grayscale-[60%] group-hover:grayscale-0" />
                 </div>
                 <div class="p-8 flex flex-col flex-grow bg-gradient-to-t from-[#050505] to-transparent">
-                  <h3 class="text-2xl font-bold font-heading mb-3 text-white group-hover:text-primary transition-colors">Gaming Store</h3>
+                  <h3 class="text-2xl font-bold font-heading mb-3 text-gray-300 group-hover:text-white transition-all duration-300">Gaming Store</h3>
                   <p class="text-gray-400 font-light flex-grow mb-6">An e-commerce platform offering the latest video games and modern accessories.</p>
-                  <a href="https://github.com/ShayMarks/GamingStore" target="_blank" class="self-start px-6 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-primary hover:border-primary transition-all font-bold text-sm tracking-widest uppercase cursor-pointer">View Repo</a>
+                  <a href="https://github.com/ShayMarks/GamingStore" target="_blank" class="glass-btn-premium self-start px-6 py-2 rounded-xl text-gray-300 font-bold text-sm tracking-widest uppercase cursor-pointer">View Repo</a>
                 </div>
               </div>
             </div>
@@ -488,15 +571,14 @@
             <div class="portfolio-item transform transition-all duration-500 hover:-translate-y-3" data-category="web">
               <div class="h-full bg-glass border border-glassBorder rounded-3xl overflow-hidden shadow-2xl group flex flex-col relative z-20 spotlight-wrapper">
                 <div class="h-56 relative overflow-hidden">
-                  <div class="absolute inset-0 bg-secondary/20 group-hover:bg-transparent transition-all z-10"></div>
-                  <img src="Photos/Projects/5.jpg" alt="WhatsApp" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                  <img src="Photos/Projects/5.jpg" alt="WhatsApp" class="w-full h-full object-cover transform group-hover:scale-110 transition-all duration-700 grayscale-[60%] group-hover:grayscale-0" />
                 </div>
                 <div class="p-8 flex flex-col flex-grow bg-gradient-to-t from-[#050505] to-transparent">
-                  <h3 class="text-xl font-bold font-heading mb-3 text-white group-hover:text-secondary transition-colors">WA Message Sender</h3>
+                  <h3 class="text-xl font-bold font-heading mb-3 text-gray-300 group-hover:text-white transition-all duration-300">WA Message Sender</h3>
                   <p class="text-gray-400 font-light flex-grow mb-6">A utility app to send WhatsApp messages dynamically without saving full contacts.</p>
                   <div class="flex gap-3">
-                    <a href="https://github.com/ShayMarks/WhatsApp-Message-Sender" target="_blank" class="px-5 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-secondary hover:border-secondary transition-all font-bold text-xs tracking-widest uppercase text-center cursor-pointer">Repo</a>
-                    <a href="https://shaymarks.github.io/WhatsApp-Message-Sender/" target="_blank" class="flex-1 px-5 py-2 rounded-xl bg-secondary/80 text-white hover:bg-secondary hover:shadow-[0_0_15px_rgba(8,186,141,0.6)] transition-all font-bold text-xs tracking-widest uppercase text-center cursor-pointer">Live Demo</a>
+                    <a href="https://github.com/ShayMarks/WhatsApp-Message-Sender" target="_blank" class="glass-btn-premium px-5 py-2 rounded-xl text-gray-300 font-bold text-xs tracking-widest uppercase text-center cursor-pointer">Repo</a>
+                    <a href="https://shaymarks.github.io/WhatsApp-Message-Sender/" target="_blank" class="glass-btn-premium flex-1 px-5 py-2 rounded-xl text-gray-300 font-bold text-sm tracking-widest uppercase cursor-pointer">Live Demo</a>
                   </div>
                 </div>
               </div>
@@ -506,13 +588,12 @@
             <div class="portfolio-item transform transition-all duration-500 hover:-translate-y-3" data-category="app">
               <div class="h-full bg-glass border border-glassBorder rounded-3xl overflow-hidden shadow-2xl group flex flex-col relative z-20 spotlight-wrapper">
                 <div class="h-56 relative overflow-hidden">
-                  <div class="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-all z-10"></div>
-                  <img src="Photos/Projects/6.jpg" alt="Scraper" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                  <img src="Photos/Projects/6.jpg" alt="Scraper" class="w-full h-full object-cover transform group-hover:scale-110 transition-all duration-700 grayscale-[60%] group-hover:grayscale-0" />
                 </div>
                 <div class="p-8 flex flex-col flex-grow bg-gradient-to-t from-[#050505] to-transparent">
-                  <h3 class="text-xl font-bold font-heading mb-3 text-white group-hover:text-primary transition-colors">Walla! News Scraper</h3>
+                  <h3 class="text-xl font-bold font-heading mb-3 text-gray-300 group-hover:text-white transition-all duration-300">Walla! News Scraper</h3>
                   <p class="text-gray-400 font-light flex-grow mb-6">Python-based automation script utilizing Selenium to scrape and store to CSV/Excel.</p>
-                  <a href="https://github.com/ShayMarks/walla_scraper" target="_blank" class="self-start px-6 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-primary hover:border-primary transition-all font-bold text-sm tracking-widest uppercase cursor-pointer">View Repo</a>
+                  <a href="https://github.com/ShayMarks/walla_scraper" target="_blank" class="glass-btn-premium self-start px-6 py-2 rounded-xl text-gray-300 font-bold text-sm tracking-widest uppercase cursor-pointer">View Repo</a>
                 </div>
               </div>
             </div>
@@ -521,15 +602,14 @@
               <!-- Replicate structure -->
               <div class="h-full bg-glass border border-glassBorder rounded-3xl overflow-hidden shadow-2xl group flex flex-col relative z-20 spotlight-wrapper">
                 <div class="h-56 relative overflow-hidden">
-                  <div class="absolute inset-0 bg-secondary/20 group-hover:bg-transparent transition-all z-10"></div>
-                  <img src="Photos/Projects/7.jpg" alt="HayDay" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                  <img src="Photos/Projects/7.jpg" alt="HayDay" class="w-full h-full object-cover transform group-hover:scale-110 transition-all duration-700 grayscale-[60%] group-hover:grayscale-0" />
                 </div>
                 <div class="p-8 flex flex-col flex-grow bg-gradient-to-t from-[#050505] to-transparent">
-                  <h3 class="text-xl font-bold font-heading mb-3 text-white group-hover:text-secondary transition-colors">HayDay List Generator</h3>
+                  <h3 class="text-xl font-bold font-heading mb-3 text-gray-300 group-hover:text-white transition-all duration-300">HayDay List Generator</h3>
                   <p class="text-gray-400 font-light flex-grow mb-6">Manager for item lists with live pricing calculation, customization and filtering.</p>
                   <div class="flex gap-3">
-                    <a href="https://github.com/ShayMarks/HayDayListGenerator" target="_blank" class="px-5 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-secondary hover:border-secondary transition-all font-bold text-xs tracking-widest uppercase text-center cursor-pointer">Repo</a>
-                    <a href="https://shaymarks.github.io/HayDayListGenerator/" target="_blank" class="flex-1 px-5 py-2 rounded-xl bg-secondary/80 text-white hover:bg-secondary transition-all font-bold text-xs tracking-widest uppercase text-center cursor-pointer">Live Demo</a>
+                    <a href="https://github.com/ShayMarks/HayDayListGenerator" target="_blank" class="glass-btn-premium px-5 py-2 rounded-xl text-gray-300 font-bold text-xs tracking-widest uppercase text-center cursor-pointer">Repo</a>
+                    <a href="https://shaymarks.github.io/HayDayListGenerator/" target="_blank" class="glass-btn-premium flex-1 px-5 py-2 rounded-xl text-gray-300 font-bold text-sm tracking-widest uppercase cursor-pointer">Live Demo</a>
                   </div>
                 </div>
               </div>
@@ -539,15 +619,14 @@
               <!-- Replicate structure -->
               <div class="h-full bg-glass border border-glassBorder rounded-3xl overflow-hidden shadow-2xl group flex flex-col relative z-20 spotlight-wrapper">
                 <div class="h-56 relative overflow-hidden">
-                  <div class="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-all z-10"></div>
-                  <img src="Photos/Projects/8.jpg" alt="Expense Calc" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                  <img src="Photos/Projects/8.jpg" alt="Expense Calc" class="w-full h-full object-cover transform group-hover:scale-110 transition-all duration-700 grayscale-[60%] group-hover:grayscale-0" />
                 </div>
                 <div class="p-8 flex flex-col flex-grow bg-gradient-to-t from-[#050505] to-transparent">
-                  <h3 class="text-xl font-bold font-heading mb-3 text-white group-hover:text-primary transition-colors">Expense Calculator</h3>
+                  <h3 class="text-xl font-bold font-heading mb-3 text-gray-300 group-hover:text-white transition-all duration-300">Expense Calculator</h3>
                   <p class="text-gray-400 font-light flex-grow mb-6">Group expense splitter built from the ground up entirely with AI (no traditional code).</p>
                   <div class="flex gap-3">
-                    <a href="https://github.com/ShayMarks/Group-Expense-Calculator" target="_blank" class="px-5 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-primary hover:border-primary transition-all font-bold text-xs tracking-widest uppercase text-center cursor-pointer">Repo</a>
-                    <a href="https://shaymarks.github.io/Group-Expense-Calculator/" target="_blank" class="flex-1 px-5 py-2 rounded-xl bg-primary/80 text-white hover:bg-primary transition-all font-bold text-xs tracking-widest uppercase text-center cursor-pointer">Live Demo</a>
+                    <a href="https://github.com/ShayMarks/Group-Expense-Calculator" target="_blank" class="glass-btn-premium px-5 py-2 rounded-xl text-gray-300 font-bold text-xs tracking-widest uppercase text-center cursor-pointer">Repo</a>
+                    <a href="https://shaymarks.github.io/Group-Expense-Calculator/" target="_blank" class="glass-btn-premium flex-1 px-5 py-2 rounded-xl text-gray-300 font-bold text-sm tracking-widest uppercase cursor-pointer">Live Demo</a>
                   </div>
                 </div>
               </div>
@@ -557,13 +636,12 @@
               <!-- Replicate structure -->
               <div class="h-full bg-glass border border-glassBorder rounded-3xl overflow-hidden shadow-2xl group flex flex-col relative z-20 spotlight-wrapper">
                 <div class="h-56 relative overflow-hidden">
-                  <div class="absolute inset-0 bg-secondary/20 group-hover:bg-transparent transition-all z-10"></div>
-                  <img src="Photos/Projects/9.png" alt="Falling Obstacles" class="w-full h-full object-contain bg-black transform group-hover:scale-110 transition-transform duration-700" />
+                  <img src="Photos/Projects/9.png" alt="Falling Obstacles" class="w-full h-full object-cover transform group-hover:scale-110 transition-all duration-700 grayscale-[60%] group-hover:grayscale-0" />
                 </div>
                 <div class="p-8 flex flex-col flex-grow bg-gradient-to-t from-[#050505] to-transparent">
-                  <h3 class="text-xl font-bold font-heading mb-3 text-white group-hover:text-secondary transition-colors">Falling Obstacles</h3>
+                  <h3 class="text-xl font-bold font-heading mb-3 text-gray-300 group-hover:text-white transition-all duration-300">Falling Obstacles</h3>
                   <p class="text-gray-400 font-light flex-grow mb-6">2D mobile game built in Unity (C#) where players dodge, collect coins, and visit shops.</p>
-                  <a href="https://github.com/ShayMarks/FallingObstaclesGame-udemy-2d" target="_blank" class="self-start px-6 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-secondary hover:border-secondary transition-all font-bold text-sm tracking-widest uppercase cursor-pointer">View Repo</a>
+                  <a href="https://github.com/ShayMarks/FallingObstaclesGame-udemy-2d" target="_blank" class="glass-btn-premium self-start px-6 py-2 rounded-xl text-gray-300 font-bold text-sm tracking-widest uppercase cursor-pointer">View Repo</a>
                 </div>
               </div>
             </div>
@@ -577,18 +655,54 @@
         <div class="container mx-auto px-6 max-w-[1400px] text-center">
           <h2 class="section-title text-4xl md:text-5xl lg:text-6xl font-black font-heading tracking-wide mb-10 text-white drop-shadow-lg fade-in">Let's Connect</h2>
           
-          <div class="max-w-xl mx-auto bg-glass backdrop-blur-3xl border border-glassBorder p-12 rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] fade-in relative overflow-hidden group">
-            <div class="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
-            <i class="fas fa-envelope text-5xl text-primary drop-shadow-[0_0_15px_rgba(188,19,254,0.5)] mb-6"></i>
-            <h3 class="text-3xl font-bold mb-8 text-white">Start a Conversation</h3>
-            
-            <a href="mailto:nrexhd@gmail.com" class="text-xl tracking-wider text-gray-300 hover:text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] transition-all block mb-12 cursor-pointer">nrexhd@gmail.com</a>
-            
-            <div class="flex justify-center gap-8">
-              <a href="https://www.linkedin.com/in/shay-marks-920546260/" target="_blank" aria-label="LinkedIn" class="w-16 h-16 rounded-full border border-glassBorder bg-[#050505] flex items-center justify-center text-3xl hover:-translate-y-2 hover:bg-white/10 hover:text-[#0a66c2] hover:border-[#0a66c2] hover:shadow-[0_10px_20px_rgba(10,102,194,0.3)] transition-all duration-300 cursor-pointer text-gray-400">
+          <div class="max-w-xl mx-auto bg-glass backdrop-blur-3xl border border-glassBorder p-8 md:p-12 rounded-[2.5rem] md:rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] fade-in relative overflow-hidden group contact-card">
+            <div id="contact-form-container">
+              <i class="fas fa-paper-plane text-4xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] mb-6"></i>
+              <h3 class="text-2xl md:text-3xl font-bold mb-8 text-white">Send a Message</h3>
+              
+              <form id="portfolio-contact-form" class="space-y-5 text-left">
+                <!-- Replace with your Access Key from https://web3forms.com/ -->
+                <input type="hidden" name="access_key" value="5644d3fb-5447-4cb1-b30d-786acb2399c9">
+                <input type="hidden" name="subject" value="New Message from Portfolio Website">
+                <input type="hidden" name="from_name" value="Portfolio Contact Form">
+                
+                <div class="relative">
+                  <input type="text" name="name" id="name" placeholder="Full Name" required maxlength="15"
+                         class="glass-input px-5 py-4 rounded-xl text-white">
+                </div>
+                
+                <div class="relative">
+                  <input type="email" name="email" id="email" placeholder="Your Email Address" required
+                         class="glass-input px-5 py-4 rounded-xl text-white">
+                </div>
+                
+                <div class="relative">
+                  <textarea name="message" id="message" rows="4" placeholder="Your Message" required maxlength="500"
+                            class="glass-input px-5 py-4 rounded-xl text-white resize-none"></textarea>
+                  <div id="char-counter" class="char-counter">0 / 500</div>
+                </div>
+                
+                <button type="submit" id="submit-btn" class="glass-btn-premium w-full py-4 rounded-xl text-white font-bold tracking-widest uppercase transition-all flex items-center justify-center gap-3">
+                  <span>Send Message</span>
+                  <i class="fas fa-arrow-right text-xs"></i>
+                </button>
+              </form>
+            </div>
+
+            <!-- Success Message -->
+            <div id="success-message" class="success-message py-10">
+              <div class="w-20 h-20 bg-green-500/20 border border-green-500/50 rounded-full flex items-center justify-center mb-6 mx-auto">
+                <i class="fas fa-check text-4xl text-green-400"></i>
+              </div>
+              <h3 class="text-2xl font-bold text-white mb-2">Message Sent!</h3>
+              <p class="text-gray-400">Thank you for reaching out. I'll get back to you shortly.</p>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-white/5 flex justify-center gap-6 md:gap-8">
+              <a href="https://www.linkedin.com/in/shay-marks-920546260/" target="_blank" aria-label="LinkedIn" class="w-12 h-12 md:w-16 md:h-16 rounded-full border border-glassBorder bg-[#050505] flex items-center justify-center text-2xl md:text-3xl hover:-translate-y-2 hover:bg-white/10 hover:text-[#0a66c2] hover:border-[#0a66c2] hover:shadow-[0_10px_20px_rgba(10,102,194,0.3)] transition-all duration-300 cursor-pointer text-gray-400">
                 <i class="fab fa-linkedin"></i>
               </a>
-              <a href="https://github.com/ShayMarks" target="_blank" aria-label="GitHub" class="w-16 h-16 rounded-full border border-glassBorder bg-[#050505] flex items-center justify-center text-3xl hover:-translate-y-2 hover:bg-white/10 hover:text-white hover:border-white hover:shadow-[0_10px_20px_rgba(255,255,255,0.3)] transition-all duration-300 cursor-pointer text-gray-400">
+              <a href="https://github.com/ShayMarks" target="_blank" aria-label="GitHub" class="w-12 h-12 md:w-16 md:h-16 rounded-full border border-glassBorder bg-[#050505] flex items-center justify-center text-2xl md:text-3xl hover:-translate-y-2 hover:bg-white/10 hover:text-white hover:border-white hover:shadow-[0_10px_20px_rgba(255,255,255,0.3)] transition-all duration-300 cursor-pointer text-gray-400">
                 <i class="fab fa-github"></i>
               </a>
             </div>
@@ -605,14 +719,28 @@
     </footer>
 
     <!-- Resume Modal -->
-    <div id="resumeModal" class="modal fixed inset-0 z-[99999] bg-black/95 backdrop-blur-xl hidden">
-      <div class="modal-content relative w-11/12 md:w-4/5 h-5/6 mx-auto mt-10 rounded-2xl overflow-hidden border border-glassBorder shadow-[0_0_50px_rgba(188,19,254,0.3)]">
-        <span class="close absolute top-4 right-6 text-white text-4xl cursor-pointer hover:text-primary transition-colors z-50 drop-shadow-md">&times;</span>
-        <iframe src="cv.pdf" frameborder="0" title="Shay Marks Resume" class="w-full h-full"></iframe>
+    <div id="resumeModal" class="modal fixed inset-0 z-[99999] p-2 md:p-10 flex items-center justify-center bg-black/40 backdrop-blur-2xl hidden transition-all duration-300">
+      <div class="modal-content-container relative w-[95%] md:w-full max-w-5xl h-[85vh] md:h-full max-h-[90vh] bg-glass backdrop-blur-3xl rounded-[2rem] md:rounded-[2.5rem] border border-glassBorder shadow-[0_20px_80px_rgba(255,255,255,0.15)] flex flex-col overflow-hidden">
+        <!-- Premium Close Button Overlay -->
+        <div class="absolute top-4 right-4 md:top-6 md:right-6 z-50">
+          <button class="close close-btn-glass" aria-label="Close Modal">&times;</button>
+        </div>
+        
+        <div class="flex-1 w-full h-full relative p-1 md:p-4 mt-12 md:mt-0">
+          <iframe src="cv.pdf" frameborder="0" title="Shay Marks Resume" class="resume-iframe w-full h-full shadow-inner"></iframe>
+        </div>
+
+        <!-- Mobile Download Fallback -->
+        <div class="md:hidden p-4 bg-white/5 border-t border-white/10 flex justify-center">
+          <a href="cv.pdf" download class="glass-btn-premium px-8 py-3 rounded-xl text-white font-bold text-sm tracking-widest uppercase flex items-center gap-3">
+            <i class="fas fa-download"></i>
+            <span>Download PDF</span>
+          </a>
+        </div>
       </div>
     </div>
 
     <!-- Custom JS -->
-    <script src="script.js?v=14"></script>
+    <script src="script.js?v=25"></script>
   </body>
 </html>

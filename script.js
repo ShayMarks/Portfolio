@@ -224,14 +224,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const resumeModal = document.getElementById('resumeModal');
 
   openResumeButton.addEventListener('click', () => {
-    resumeModal.style.display = 'block';
+    resumeModal.classList.remove('hidden');
+    // Small timeout to allow the transition to trigger
+    setTimeout(() => {
+      resumeModal.classList.add('active');
+    }, 10);
     body.style.overflow = 'hidden';
   });
 
   // סגירת המודל של קורות החיים
   modalCloses.forEach((close) => {
     close.addEventListener('click', () => {
-      close.parentElement.parentElement.style.display = 'none';
+      resumeModal.classList.remove('active');
+      setTimeout(() => {
+        resumeModal.classList.add('hidden');
+      }, 500); // Match CSS transition duration
       body.style.overflow = 'auto';
     });
   });
@@ -240,7 +247,10 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('click', (e) => {
     modals.forEach((modal) => {
       if (e.target === modal) {
-        modal.style.display = 'none';
+        modal.classList.remove('active');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+        }, 500);
         body.style.overflow = 'auto';
       }
     });
@@ -540,7 +550,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Magnetic hover glow positioning
 document.addEventListener('DOMContentLoaded', () => {
   const magneticElements = document.querySelectorAll(
-    '.btn, .portfolio-item > div, .skills-filter, .filter-btn, .timeline-item > div, .social-icon, .about-text-content, .skill-item'
+    '.btn, .portfolio-item > div, .skills-filter, .filter-btn, .timeline-item > div, .social-icon, .about-text-content, .skill-item, .contact-card'
   );
 
   magneticElements.forEach((el) => {
@@ -603,6 +613,75 @@ document.addEventListener('DOMContentLoaded', () => {
     aboutImage.addEventListener('mouseleave', () => {
       maskTargetRadius = 0;
       maskBreathing = false;
+    });
+  }
+});
+
+// Contact Form Logic
+document.addEventListener('DOMContentLoaded', () => {
+  const contactForm = document.getElementById('portfolio-contact-form');
+  const contactFormContainer = document.getElementById('contact-form-container');
+  const successMessage = document.getElementById('success-message');
+  const charCounter = document.getElementById('char-counter');
+  const messageInput = document.getElementById('message');
+
+  if (contactForm) {
+    // Character Counter
+    if (messageInput && charCounter) {
+      messageInput.addEventListener('input', () => {
+        const length = messageInput.value.length;
+        charCounter.textContent = `${length} / 500`;
+        if (length >= 500) {
+          charCounter.style.color = '#ff4444';
+        } else {
+          charCounter.style.color = 'rgba(255, 255, 255, 0.4)';
+        }
+      });
+    }
+
+    // Form Submission
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      const originalBtnContent = submitBtn.innerHTML;
+      
+      // Loading State
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Sending...</span>';
+
+      try {
+        const formData = new FormData(contactForm);
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Success Transition
+          gsap.to(contactFormContainer, {
+            opacity: 0,
+            y: -20,
+            duration: 0.5,
+            onComplete: () => {
+              contactFormContainer.style.display = 'none';
+              successMessage.style.display = 'flex';
+              gsap.fromTo(successMessage, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
+            }
+          });
+        } else {
+          alert('Something went wrong. Please try again.');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnContent;
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Connection error. Please check your internet and try again.');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnContent;
+      }
     });
   }
 });
