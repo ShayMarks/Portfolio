@@ -24,16 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Typed.js לאפקט הקלדה בקטע ה-Hero
   new Typed('.typed-text', {
     strings: [
+      'Manual QA Tester',
+      'Honors Graduate',
       'Frontend Developer',
       'JavaScript Enthusiast',
       'C# Developer',
       'HTML and CSS Expert',
       'Problem Solver',
-      'Responsive Design Implementer',
-      'Git and Version Control User',
-      'RESTful API Integrator',
-      'Basic Node.js Developer',
-      'Team Collaborator',
+      'Full-Stack Developer',
       'Self-Learner',
       'AI-Generated Music Creator',
     ],
@@ -112,11 +110,11 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.from(title, {
       scrollTrigger: {
         trigger: title,
-        start: 'top 80%',
+        start: 'top 95%',
       },
       y: 50,
       opacity: 0,
-      duration: 1,
+      duration: 0.8,
       ease: 'power2.out',
     });
   });
@@ -126,11 +124,11 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.from(element, {
       scrollTrigger: {
         trigger: element,
-        start: 'top 80%',
+        start: 'top 95%',
       },
       y: 50,
       opacity: 0,
-      duration: 1,
+      duration: 0.8,
       ease: 'power2.out',
     });
   });
@@ -214,30 +212,45 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // פונקציונליות של המודלים (Modals) עבור קורות החיים
+  // פונקציונליות של המודלים (Modals) עבור קורות החיים והדיפלומה
   const modals = document.querySelectorAll('.modal');
   const modalCloses = document.querySelectorAll('.close');
   const body = document.body;
 
-  // פתיחת המודל של קורות החיים
+  // פתיחת המודלים
   const openResumeButton = document.getElementById('openResumeButton');
-  const resumeModal = document.getElementById('resumeModal');
+  const openDiplomaButton = document.getElementById('openDiplomaButton');
+  const documentModal = document.getElementById('documentModal');
+  const documentIframe = document.getElementById('documentIframe');
+  const mobileDownloadLink = document.getElementById('mobileDownloadLink');
 
-  openResumeButton.addEventListener('click', () => {
-    resumeModal.classList.remove('hidden');
+  function openModal(filePath) {
+    if (documentIframe) documentIframe.src = filePath;
+    if (mobileDownloadLink) mobileDownloadLink.href = filePath;
+    
+    documentModal.classList.remove('hidden');
     // Small timeout to allow the transition to trigger
     setTimeout(() => {
-      resumeModal.classList.add('active');
+      documentModal.classList.add('active');
     }, 10);
     body.style.overflow = 'hidden';
-  });
+  }
 
-  // סגירת המודל של קורות החיים
+  if (openResumeButton) {
+    openResumeButton.addEventListener('click', () => openModal('Documents/Resume.pdf'));
+  }
+
+  if (openDiplomaButton) {
+    openDiplomaButton.addEventListener('click', () => openModal('Documents/diploma.pdf'));
+  }
+
+  // סגירת המודלים
   modalCloses.forEach((close) => {
     close.addEventListener('click', () => {
-      resumeModal.classList.remove('active');
+      documentModal.classList.remove('active');
       setTimeout(() => {
-        resumeModal.classList.add('hidden');
+        documentModal.classList.add('hidden');
+        if (documentIframe) documentIframe.src = ''; // Clear src when closing
       }, 500); // Match CSS transition duration
       body.style.overflow = 'auto';
     });
@@ -245,15 +258,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // סגירת המודלים בעת לחיצה מחוץ לתוכן המודל
   window.addEventListener('click', (e) => {
-    modals.forEach((modal) => {
-      if (e.target === modal) {
-        modal.classList.remove('active');
-        setTimeout(() => {
-          modal.classList.add('hidden');
-        }, 500);
-        body.style.overflow = 'auto';
-      }
-    });
+    if (e.target === documentModal) {
+      documentModal.classList.remove('active');
+      setTimeout(() => {
+        documentModal.classList.add('hidden');
+        if (documentIframe) documentIframe.src = ''; // Clear src when closing
+      }, 500);
+      body.style.overflow = 'auto';
+    }
   });
 
   // סגירת התפריט במובייל לאחר לחיצה על קישור
@@ -363,12 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // אנימציה עם GSAP בעת ריחוף על התמונה
   const aboutImage = document.querySelector('.about-image img');
-
-  gsap.fromTo(
-    aboutImage,
-    { opacity: 0, y: -50 },
-    { opacity: 1, y: 0, duration: 1 }
-  );
+  // Removed immediate animation to let ScrollTrigger handle it via .fade-in class
 
   aboutImage.addEventListener('mouseenter', () => {
     gsap.to(aboutImage, {
@@ -526,22 +533,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // תיקון להצגת ה-PDF במובייל
   // אם ה-iframe לא נתמך, להציג קישור להורדה
-  const iframe = document.querySelector('#resumeModal iframe');
-  const resumeModalContent = document.querySelector('#resumeModal .modal-content');
+  const iframe = document.getElementById('documentIframe');
 
   if (iframe) {
     iframe.addEventListener('load', () => {
       // בדיקה אם ה-iframe נטען כראוי
-      if (iframe.contentDocument && iframe.contentDocument.body.childElementCount === 0) {
-        // אם ה-iframe ריק, להציג קישור להורדת ה-PDF
-        const downloadLink = document.createElement('a');
-        downloadLink.href = 'cv.pdf';
-        downloadLink.textContent = 'Click here to download the resume';
-        downloadLink.classList.add('btn', 'btn-primary');
-        downloadLink.style.display = 'block';
-        downloadLink.style.textAlign = 'center';
-        resumeModalContent.innerHTML = ''; // ניקוי תוכן המודל
-        resumeModalContent.appendChild(downloadLink);
+      try {
+        if (iframe.contentDocument && iframe.contentDocument.body && iframe.contentDocument.body.childElementCount === 0) {
+          // הצגה של כפתור ההורדה במקרה של כשל בטעינה (למרות שכבר יש לנו כזה במובייל)
+          console.log('Iframe source might not be rendering properly');
+        }
+      } catch (e) {
+        // Cross-origin issues might occur if files are served from some CDNs, 
+        // but for local files it should be fine.
       }
     });
   }
