@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.from(title, {
       scrollTrigger: {
         trigger: title,
-        start: 'top 95%',
+        start: 'top 110%',
       },
       y: 50,
       opacity: 0,
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.from(element, {
       scrollTrigger: {
         trigger: element,
-        start: 'top 95%',
+        start: 'top 110%',
       },
       y: 50,
       opacity: 0,
@@ -331,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const percentY = (deltaY / radiusY) * 50 + 50;
 
       // Update the radial gradient to follow the mouse dynamically relative to the circle's center
-      heroInteractiveCircle.style.background = `radial-gradient(circle at ${percentX}% ${percentY}%, rgba(188, 19, 254, 0.5) 0%, rgba(8, 186, 141, 0.2) 50%, rgba(5, 5, 5, 0.4) 100%)`;
+      heroInteractiveCircle.style.background = `radial-gradient(circle at ${percentX}% ${percentY}%, rgba(48, 92, 222, 0.5) 0%, rgba(8, 186, 141, 0.2) 50%, rgba(5, 5, 5, 0.4) 100%)`;
       
       // האייקון שבפנים יטה בעקבות העכבר עם הגבלת זווית חכמה
       const icon = heroInteractiveCircle.querySelector('i');
@@ -354,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
   particlesJS('particles-js', {
     particles: {
       number: { value: 80, density: { enable: true, value_area: 500 } },
-      color: { value: ['#bc13fe', '#4713fe', '#1355fe'] },
+      color: { value: ['#305cde', '#4169e1', '#1e3a8a'] },
       shape: { type: 'circle' },
       opacity: { value: 0.5, random: true },
       size: { value: 5, random: true },
