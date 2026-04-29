@@ -662,11 +662,47 @@
       <!-- Contact -->
       <section id="contact" class="pt-12 pb-32 relative z-10 border-t border-glassBorder bg-[#050505]">
         <div class="container mx-auto px-6 max-w-[1400px] text-center">
-          <h2 class="section-title text-4xl md:text-5xl lg:text-6xl font-black font-heading tracking-wide mb-10 text-white drop-shadow-lg contact-fade">Let's Connect</h2>
+          <h2 class="section-title text-4xl md:text-5xl lg:text-6xl font-black font-heading tracking-wide mb-16 text-white drop-shadow-lg contact-fade">Let's Connect</h2>
           
-          <div class="max-w-xl mx-auto bg-glass backdrop-blur-3xl border border-glassBorder p-8 md:p-12 rounded-[2.5rem] md:rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] contact-fade relative overflow-hidden group contact-card">
-            <div id="contact-form-container">
-              <i class="fas fa-paper-plane text-4xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] mb-6"></i>
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-6xl mx-auto items-stretch text-left">
+            
+            <!-- Contact Info Sidebar (Left) -->
+            <div class="lg:col-span-6 flex flex-col gap-10 justify-center order-2 lg:order-1">
+              
+              <!-- Email -->
+              <a href="mailto:me@shaymarks.com" class="bg-glass backdrop-blur-3xl p-8 rounded-3xl flex items-center gap-6 shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-300 group magnetic-glow cursor-pointer relative overflow-hidden w-full contact-card">
+                <i class="fas fa-envelope text-4xl md:text-5xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] group-hover:scale-110 transition-transform duration-300 z-10 flex-shrink-0 w-16 text-center"></i>
+                <div class="z-10 overflow-hidden flex flex-col justify-center">
+                  <h4 class="text-white font-black uppercase tracking-widest text-2xl md:text-3xl mb-2 drop-shadow-md">Email</h4>
+                  <p class="text-gray-400 text-lg md:text-xl font-medium group-hover:text-white transition-colors truncate">me@shaymarks.com</p>
+                </div>
+              </a>
+
+              <!-- Phone -->
+              <a href="tel:+972500000000" class="bg-glass backdrop-blur-3xl p-8 rounded-3xl flex items-center gap-6 shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-300 group magnetic-glow cursor-pointer relative overflow-hidden w-full contact-card">
+                <div class="group-hover:scale-110 transition-transform duration-300 z-10 flex-shrink-0 w-16 text-center">
+                  <i class="fas fa-phone-alt text-4xl md:text-5xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] scale-x-[-1] inline-block"></i>
+                </div>
+                <div class="z-10 overflow-hidden flex flex-col justify-center">
+                  <h4 class="text-white font-black uppercase tracking-widest text-2xl md:text-3xl mb-2 drop-shadow-md">Phone</h4>
+                  <p class="text-gray-400 text-lg md:text-xl font-medium group-hover:text-white transition-colors truncate">+972 5X XXX XXXX</p>
+                </div>
+              </a>
+
+              <!-- Location -->
+              <div class="bg-glass backdrop-blur-3xl p-8 rounded-3xl flex items-center gap-6 shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition-all duration-300 group magnetic-glow relative overflow-hidden w-full contact-card">
+                <i class="fas fa-map-marker-alt text-4xl md:text-5xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] group-hover:scale-110 transition-transform duration-300 z-10 flex-shrink-0 w-16 text-center"></i>
+                <div class="z-10 overflow-hidden flex flex-col justify-center">
+                  <h4 class="text-white font-black uppercase tracking-widest text-2xl md:text-3xl mb-2 drop-shadow-md">Location</h4>
+                  <p class="text-gray-400 text-lg md:text-xl font-medium group-hover:text-white transition-colors truncate">Israel</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact Form (Right) -->
+            <div class="lg:col-span-6 w-full mx-auto bg-glass backdrop-blur-3xl border border-glassBorder p-8 md:p-12 rounded-[2.5rem] md:rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] contact-fade relative overflow-hidden group contact-card flex flex-col justify-center order-1 lg:order-2">
+              <div id="contact-form-container" class="text-center">
+                <i class="fas fa-paper-plane text-4xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] mb-6"></i>
               <h3 class="text-2xl md:text-3xl font-bold mb-8 text-white">Send a Message</h3>
               
               <form id="portfolio-contact-form" class="space-y-5 text-left">
@@ -714,10 +750,8 @@
               <a href="https://github.com/ShayMarks" target="_blank" aria-label="GitHub" class="w-12 h-12 md:w-16 md:h-16 rounded-full border border-glassBorder bg-[#050505] flex items-center justify-center text-2xl md:text-3xl hover:-translate-y-2 hover:bg-white/10 hover:text-white hover:border-white hover:shadow-[0_10px_20px_rgba(255,255,255,0.3)] transition-all duration-300 cursor-pointer text-gray-400">
                 <i class="fab fa-github"></i>
               </a>
-              <a href="mailto:me@shaymarks.com" aria-label="Email" class="w-12 h-12 md:w-16 md:h-16 rounded-full border border-glassBorder bg-[#050505] flex items-center justify-center text-2xl md:text-3xl hover:-translate-y-2 hover:bg-white/10 hover:text-primary hover:border-primary hover:shadow-[0_10px_20px_rgba(48, 92, 222,0.3)] transition-all duration-300 cursor-pointer text-gray-400">
-                <i class="fas fa-envelope"></i>
-              </a>
             </div>
+          </div>
           </div>
         </div>
       </section>
