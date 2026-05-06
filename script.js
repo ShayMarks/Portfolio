@@ -2,13 +2,44 @@
 
 // המתנה לטעינת ה-DOM לפני הרצת הסקריפטים
 document.addEventListener('DOMContentLoaded', () => {
-  // פונקציונליות של המסך הטעינה (Preloader)
+  // Cinematic preloader: animated progress + curtain reveal
   const preloader = document.getElementById('preloader');
+  const fillEl    = document.querySelector('.preloader-bar-fill');
+  const pctEl     = document.getElementById('preloader-percent');
+  const curtain   = document.querySelector('.preloader-curtain');
+
+  let progress = 0;
+  let target   = 5;
+  const tick = () => {
+    progress += (target - progress) * 0.12;
+    if (fillEl) fillEl.style.width = progress.toFixed(2) + '%';
+    if (pctEl)  pctEl.textContent  = Math.round(progress);
+    if (progress < 99.4) requestAnimationFrame(tick);
+  };
+  tick();
+  // Bump the target up smoothly during page load
+  const bumpInterval = setInterval(() => {
+    target = Math.min(target + 5 + Math.random() * 7, 92);
+  }, 220);
+
   window.addEventListener('load', () => {
-    preloader.classList.add('fade-out');
+    clearInterval(bumpInterval);
+    target = 100;
     setTimeout(() => {
-      preloader.style.display = 'none';
-    }, 1000);
+      if (curtain) {
+        curtain.style.display = 'block';
+        // Force reflow so the next class change triggers the transition
+        // eslint-disable-next-line no-unused-expressions
+        curtain.offsetHeight;
+        curtain.classList.add('split');
+      }
+      preloader.classList.add('fade-out');
+      document.body.classList.remove('is-loading');
+      setTimeout(() => {
+        preloader.style.display = 'none';
+        if (curtain) curtain.style.display = 'none';
+      }, 1100);
+    }, 500);
   });
 
   // אפקט גלילה ל-header
@@ -40,63 +71,26 @@ document.addEventListener('DOMContentLoaded', () => {
     loop: true,
   });
 
-  // Particles.js לרקע אינטראקטיבי בקטע ה-Hero
+  // Hero particles — refined, slower, dual-tone palette
   particlesJS('hero-canvas', {
     particles: {
-      number: { value: 80, density: { enable: true, value_area: 800 } },
-      color: { value: '#ffffff' },
-      shape: {
-        type: 'circle',
-        stroke: { width: 0, color: '#000000' },
-        polygon: { nb_sides: 5 },
-      },
-      opacity: {
-        value: 0.5,
-        random: false,
-        anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false },
-      },
-      size: {
-        value: 3,
-        random: true,
-        anim: { enable: false, speed: 40, size_min: 0.1, sync: false },
-      },
-      line_linked: {
-        enable: true,
-        distance: 150,
-        color: '#ffffff',
-        opacity: 0.4,
-        width: 1,
-      },
-      move: {
-        enable: true,
-        speed: 6,
-        direction: 'none',
-        random: false,
-        straight: false,
-        out_mode: 'out',
-        bounce: false,
-        attract: { enable: false, rotateX: 600, rotateY: 1200 },
-      },
+      number: { value: 60, density: { enable: true, value_area: 900 } },
+      color: { value: ['#ffffff', '#305cde', '#08ba8d'] },
+      shape: { type: 'circle', stroke: { width: 0, color: '#000000' } },
+      opacity: { value: 0.45, random: true, anim: { enable: true, speed: 0.6, opacity_min: 0.1, sync: false } },
+      size:    { value: 2.4, random: true, anim: { enable: true, speed: 1.5, size_min: 0.3, sync: false } },
+      line_linked: { enable: true, distance: 140, color: '#7aa2ff', opacity: 0.18, width: 1 },
+      move: { enable: true, speed: 1.2, direction: 'none', random: true, straight: false, out_mode: 'out', bounce: false },
     },
     interactivity: {
       detect_on: 'canvas',
-      events: {
-        onhover: { enable: true, mode: 'grab' },
-        onclick: { enable: true, mode: 'push' },
-        resize: true,
-      },
+      events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: true, mode: 'push' }, resize: true },
       modes: {
-        grab: { distance: 140, line_linked: { opacity: 1 } },
-        bubble: {
-          distance: 400,
-          size: 40,
-          duration: 2,
-          opacity: 8,
-          speed: 3,
-        },
-        repulse: { distance: 200, duration: 0.4 },
-        push: { particles_nb: 4 },
-        remove: { particles_nb: 2 },
+        grab:    { distance: 180, line_linked: { opacity: 0.7 } },
+        bubble:  { distance: 220, size: 6, duration: 2, opacity: 0.9, speed: 3 },
+        repulse: { distance: 120, duration: 0.4 },
+        push:    { particles_nb: 3 },
+        remove:  { particles_nb: 2 },
       },
     },
     retina_detect: true,
@@ -279,23 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // אפקט ריחוף לכפתורים
-  document.querySelectorAll('.btn').forEach((button) => {
-    button.addEventListener('mouseenter', () => {
-      gsap.to(button, {
-        scale: 1.05,
-        duration: 0.3,
-        ease: 'power2.out',
-      });
-    });
-    button.addEventListener('mouseleave', () => {
-      gsap.to(button, {
-        scale: 1,
-        duration: 0.3,
-        ease: 'power2.out',
-      });
-    });
-  });
+  // Button hover scale handled by magnetic effect in v3 module (no GSAP conflict)
 
   // אפקט פרלקס לתוכן ה-Hero ולעיגול לפי תנועת העכבר
   const heroContent = document.querySelector('.hero-content');
@@ -689,3 +667,348 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+/* =================================================================
+   ULTRA REDESIGN v3 — JS modules
+   Ambient canvas, scroll progress, section indicators, split-text,
+   counters, magnetic buttons, 3D tilt, copy-to-clipboard toast,
+   back-to-top, scroll-cue auto-hide.
+   ================================================================= */
+(() => {
+  'use strict';
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ----- helpers ------------------------------------------------- */
+  const $  = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const clamp = (v, mn, mx) => Math.max(mn, Math.min(mx, v));
+
+  /* ============================================================
+     1) AMBIENT CANVAS  —  drifting aurora blobs (mouse-reactive)
+     ============================================================ */
+  const initAmbient = () => {
+    const c = document.getElementById('ambient-canvas');
+    if (!c || reduceMotion) return;
+
+    const ctx = c.getContext('2d', { alpha: true });
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let W = 0, H = 0;
+
+    const resize = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = window.innerWidth;
+      H = window.innerHeight;
+      c.width  = W * dpr;
+      c.height = H * dpr;
+      c.style.width  = W + 'px';
+      c.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Blob field
+    const blobs = [
+      { x: 0.18, y: 0.30, r: 320, hue: '48,92,222',  alpha: 0.30, vx:  0.02, vy:  0.015, follow: 0.10 },
+      { x: 0.78, y: 0.22, r: 280, hue: '8,186,141',  alpha: 0.28, vx: -0.025, vy: 0.020,  follow: 0.06 },
+      { x: 0.55, y: 0.78, r: 380, hue: '48,92,222',  alpha: 0.22, vx:  0.018, vy: -0.022, follow: 0.04 },
+      { x: 0.10, y: 0.85, r: 240, hue: '8,186,141',  alpha: 0.25, vx: -0.02,  vy: -0.015, follow: 0.03 },
+    ];
+
+    const mouse = { x: 0.5, y: 0.5 };
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX / window.innerWidth;
+      mouse.y = e.clientY / window.innerHeight;
+    }, { passive: true });
+
+    const render = () => {
+      // Soft trail (low-alpha black wash) for smooth drifting feel
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = 'rgba(5,5,5,0.92)';
+      ctx.fillRect(0, 0, W, H);
+
+      ctx.globalCompositeOperation = 'lighter';
+      blobs.forEach((b, i) => {
+        // Drift
+        b.x += b.vx * 0.005;
+        b.y += b.vy * 0.005;
+        if (b.x < -0.1 || b.x > 1.1) b.vx *= -1;
+        if (b.y < -0.1 || b.y > 1.1) b.vy *= -1;
+        // Subtle gravitate toward mouse
+        b.x = lerp(b.x, mouse.x, b.follow * 0.012);
+        b.y = lerp(b.y, mouse.y, b.follow * 0.012);
+
+        const cx = b.x * W;
+        const cy = b.y * H;
+        // Slowly modulate radius
+        const r = b.r + Math.sin((performance.now() / 2000) + i) * 30;
+        const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+        grd.addColorStop(0,   `rgba(${b.hue}, ${b.alpha})`);
+        grd.addColorStop(0.5, `rgba(${b.hue}, ${b.alpha * 0.4})`);
+        grd.addColorStop(1,   'rgba(0,0,0,0)');
+        ctx.fillStyle = grd;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.globalCompositeOperation = 'source-over';
+      requestAnimationFrame(render);
+    };
+    render();
+  };
+
+  /* ============================================================
+     2) SCROLL PROGRESS BAR
+     ============================================================ */
+  const initScrollProgress = () => {
+    const bar = document.getElementById('scroll-progress');
+    if (!bar) return;
+    const update = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+      bar.style.width = pct + '%';
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+  };
+
+  /* ============================================================
+     3) SECTION INDICATORS  —  highlight current section in view
+     ============================================================ */
+  const initSectionIndicators = () => {
+    const indicators = $$('#section-indicators a');
+    if (!indicators.length) return;
+    const ids = indicators.map(a => a.getAttribute('href').slice(1));
+    const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
+
+    const setActive = (id) => {
+      indicators.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      // Pick the entry with the largest intersection ratio that is intersecting
+      let best = null;
+      entries.forEach(e => {
+        if (e.isIntersecting && (!best || e.intersectionRatio > best.intersectionRatio)) best = e;
+      });
+      if (best) setActive(best.target.id);
+    }, { threshold: [0.2, 0.4, 0.6], rootMargin: '-20% 0px -40% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+
+    // Smooth-scroll on click + keep active state in sync
+    indicators.forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const id = a.getAttribute('href').slice(1);
+        const target = document.getElementById(id);
+        if (target) {
+          window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
+          setActive(id);
+        }
+      });
+    });
+
+    // Mirror state to the top nav links too
+    const navLinks = $$('header .nav-menu a');
+    const setNavActive = (id) => navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+    const navObserver = new IntersectionObserver((entries) => {
+      let best = null;
+      entries.forEach(e => { if (e.isIntersecting && (!best || e.intersectionRatio > best.intersectionRatio)) best = e; });
+      if (best) setNavActive(best.target.id);
+    }, { threshold: [0.2, 0.5], rootMargin: '-20% 0px -40% 0px' });
+    sections.forEach(s => navObserver.observe(s));
+  };
+
+  /* ============================================================
+     4) SPLIT-TEXT  —  animate hero title char-by-char
+     ============================================================ */
+  const initSplitText = () => {
+    const targets = $$('[data-split]');
+    targets.forEach(el => {
+      // Wrap text into per-char spans. If `gradient` is true, each char gets its
+      // own gradient-clip — necessary because background-clip:text doesn't
+      // propagate from a parent to its descendants' own text.
+      const wrap = (text, baseDelay, gradient) => {
+        const frag = document.createDocumentFragment();
+        Array.from(text).forEach((ch, i) => {
+          if (ch === ' ') { frag.appendChild(document.createTextNode(' ')); return; }
+          const span = document.createElement('span');
+          span.className = 'split-char' + (gradient ? ' gradient-char' : '');
+          span.textContent = ch;
+          span.style.animationDelay = (baseDelay + i * 0.03) + 's';
+          frag.appendChild(span);
+        });
+        return frag;
+      };
+
+      const process = (node, base, gradient) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const frag = wrap(node.textContent, base.value, gradient);
+          base.value += node.textContent.length * 0.03;
+          node.parentNode.replaceChild(frag, node);
+        } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'BR') {
+          // Detect gradient/clip-text wrappers (Tailwind: bg-clip-text)
+          const isClip = node.classList.contains('bg-clip-text') || node.classList.contains('text-transparent');
+          const childGradient = gradient || isClip;
+          Array.from(node.childNodes).forEach(child => process(child, base, childGradient));
+        }
+      };
+
+      const base = { value: 0.05 };
+      Array.from(el.childNodes).forEach(n => process(n, base, false));
+    });
+  };
+
+  /* ============================================================
+     5) ANIMATED COUNTERS  —  hero stats
+     ============================================================ */
+  const initCounters = () => {
+    const targets = $$('[data-count]');
+    if (!targets.length) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        if (el.dataset.done === '1') return;
+        el.dataset.done = '1';
+        const end = parseInt(el.dataset.count, 10) || 0;
+        const suffix = el.dataset.suffix || '';
+        const dur = 1400;
+        const start = performance.now();
+        const step = (t) => {
+          const p = Math.min(1, (t - start) / dur);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(end * eased) + (p === 1 ? suffix : '');
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.4 });
+    targets.forEach(t => observer.observe(t));
+  };
+
+  /* ============================================================
+     6) MAGNETIC BUTTONS  —  pull toward cursor
+     ============================================================ */
+  const initMagnetic = () => {
+    if (reduceMotion) return;
+    const els = $$('.btn, .glass-btn-premium, .filter-btn, .skills-filter');
+    els.forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const r = el.getBoundingClientRect();
+        const mx = e.clientX - r.left;
+        const my = e.clientY - r.top;
+        el.style.setProperty('--bx', mx + 'px');
+        el.style.setProperty('--by', my + 'px');
+        // Subtle physical pull + tiny scale lift
+        const dx = (mx - r.width / 2) * 0.18;
+        const dy = (my - r.height / 2) * 0.18;
+        el.style.transform = `translate(${dx}px, ${dy}px) scale(1.04)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = '';
+      });
+    });
+  };
+
+  /* ============================================================
+     7) 3D TILT  —  skill cards + project cards
+     ============================================================ */
+  const initTilt = () => {
+    if (reduceMotion) return;
+    // 3D tilt only on portfolio cards. Skill cards keep their original look.
+    $$('.portfolio-item > div').forEach(card => {
+      const max = 8; // degrees
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const mx = e.clientX - r.left;
+        const my = e.clientY - r.top;
+        const px = (mx / r.width)  - 0.5;
+        const py = (my / r.height) - 0.5;
+        const rotY = clamp(px * (max * 2),  -max, max);
+        const rotX = clamp(-py * (max * 2), -max, max);
+        card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(0)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+  };
+
+  /* ============================================================
+     8) COPY-TO-CLIPBOARD  +  TOAST
+     ============================================================ */
+  const showToast = (msg, icon = 'fa-check') => {
+    const stack = document.getElementById('toast-stack');
+    if (!stack) return;
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.innerHTML = `<i class="fas ${icon}"></i><span>${msg}</span>`;
+    stack.appendChild(t);
+    setTimeout(() => t.remove(), 3200);
+  };
+
+  const initCopyOnClick = () => {
+    const email = document.querySelector('a[href^="mailto:"]');
+    const phone = document.querySelector('a[href^="tel:"]');
+
+    [email, phone].forEach(el => {
+      if (!el) return;
+      el.addEventListener('click', (e) => {
+        // Don't interrupt the actual mailto/tel intent — but copy in parallel.
+        const value = el.getAttribute('href').replace(/^(mailto:|tel:)/, '');
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(value).then(() => {
+            showToast('Copied to clipboard', 'fa-clipboard-check');
+          }).catch(() => {});
+        }
+      });
+    });
+  };
+
+  /* ============================================================
+     9) BACK-TO-TOP
+     ============================================================ */
+  const initBackToTop = () => {
+    const btn = document.getElementById('back-to-top');
+    if (!btn) return;
+    const update = () => btn.classList.toggle('visible', window.scrollY > 600);
+    window.addEventListener('scroll', update, { passive: true });
+    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    update();
+  };
+
+  /* ============================================================
+     10) SCROLL CUE  —  hide once user scrolls
+     ============================================================ */
+  const initScrollCue = () => {
+    const cue = document.querySelector('.scroll-cue');
+    if (!cue) return;
+    const onScroll = () => {
+      cue.style.opacity = window.scrollY > 80 ? '0' : '1';
+      cue.style.transition = 'opacity 0.4s ease';
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  };
+
+  /* ============================================================
+     Boot
+     ============================================================ */
+  document.addEventListener('DOMContentLoaded', () => {
+    // Ambient canvas disabled — background stays calm/static
+    initScrollProgress();
+    initSectionIndicators();
+    initSplitText();
+    initCounters();
+    initMagnetic();
+    initTilt();
+    initCopyOnClick();
+    initBackToTop();
+    initScrollCue();
+  });
+})();
